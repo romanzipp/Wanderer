@@ -11,9 +11,6 @@ module.exports = {
         sourceType: 'module',
         ecmaVersion: 12,
     },
-    plugins: [
-        'vue',
-    ],
     rules: {
         indent: ['error', 4],
         'max-len': 'off',
