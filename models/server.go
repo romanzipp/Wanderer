@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"github.com/hashicorp/nomad/api"
 	"gorm.io/gorm"
 	"log"
@@ -53,9 +52,7 @@ func (s Server) Check(db *gorm.DB) (ServerStatus, error) {
 		return StatusUnknown, err
 	}
 
-	fmt.Println(client)
-
-	jobs, _, err := client.Jobs().List(&api.QueryOptions{})
+	_, _, err = client.Jobs().List(&api.QueryOptions{})
 	if err != nil {
 		s.Status = StatusErr
 	} else {
@@ -65,10 +62,6 @@ func (s Server) Check(db *gorm.DB) (ServerStatus, error) {
 	s.LastStatusCheck = time.Now()
 
 	db.Save(s)
-
-	for _, v := range jobs {
-		fmt.Println(v)
-	}
 
 	return s.Status, nil
 }

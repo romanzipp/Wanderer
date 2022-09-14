@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/romanzipp/wanderer/controllers/web"
 	"gorm.io/gorm"
@@ -60,7 +59,5 @@ func AuthRequired() gin.HandlerFunc {
 			abort(c)
 			return
 		}
-
-		fmt.Println(token)
 	}
 }
