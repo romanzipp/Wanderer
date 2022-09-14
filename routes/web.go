@@ -24,6 +24,10 @@ func InitWebRoutes(router *gin.Engine, db *gorm.DB) {
 		web.ListServersController(c, db)
 	})
 
+	authed.GET("/servers/:id", func(c *gin.Context) {
+		web.ShowServerController(c, db, c.Param("id"))
+	})
+
 	authed.GET("/servers/create", func(c *gin.Context) {
 		web.ShowCreateServerController(c, db)
 	})

@@ -16,6 +16,24 @@ func ListServersController(c *gin.Context, db *gorm.DB) {
 		"servers": servers,
 	})
 }
+
+func ShowServerController(c *gin.Context, db *gorm.DB, serverId string) {
+	var server models.Server
+	db.First(&server, serverId)
+
+	if server.ID == 0 {
+		c.Redirect(302, "/servers")
+		return
+	}
+
+	server.Check()
+
+	c.HTML(http.StatusOK, "server", gin.H{
+		"title":  "Server",
+		"server": server,
+	})
+}
+
 func ShowCreateServerController(c *gin.Context, db *gorm.DB) {
 	c.HTML(http.StatusOK, "servers-create", gin.H{
 		"title": "Create server",
