@@ -11,8 +11,37 @@
 
 ## Development
 
+### Requirements
+
+- Go 1.19+
+- Yarn
+
+### Go app
+
+#### Install dependencies
+
+```
+go get
+```
+
+#### Build & hot reload
+
 ```shell
 gow -e=go,html run .
+```
+
+### Frontend
+
+#### Install dependencies
+
+```
+yarn install
+```
+
+#### Build & hot reload
+
+```shell
+yarn watch
 ```
 
 ## License
