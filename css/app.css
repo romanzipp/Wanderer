@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    input[type="text"] {
+        @apply block w-full bg-white rounded shadow-sm border border-gray-300 px-3 py-2 text-sm
+    }
+
+    input[type="text"]:focus-visible {
+        @apply outline-offset-2 outline outline-pink-400 outline-2
+    }
+
+    button {
+        @apply px-6 py-2 text-sm rounded font-medium transition-colors duration-150 shadow
+    }
+
+    button.primary {
+        @apply bg-pink-400 text-white shadow-pink-200
+    }
+
+    button.primary:hover {
+        @apply bg-pink-500
+    }
+}

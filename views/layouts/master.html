@@ -1,0 +1,25 @@
+<!-- /views/layouts/master.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.title}}</title>
+    <link rel="stylesheet" href="/dist/app.css">
+    <link rel="icon" href="/assets/logo.svg">
+</head>
+<body class="bg-gray-50 min-h-full">
+<div>
+
+    <nav class="flex justify-between bg-pink-500 text-white font-semibold px-6">
+        <div class="text-lg py-4">
+            Wanderer
+        </div>
+    </nav>
+
+    <main class="container mx-auto mt-12">
+        {{template "content" .}}
+    </main>
+
+</div>
+</body>
+</html>
