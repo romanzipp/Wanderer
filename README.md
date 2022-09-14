@@ -4,7 +4,7 @@ Nomad deployer
 
 ## License
 
-MIT
+Released under the [MIT License](LICENSE.md).
 
 ## Authors
 
