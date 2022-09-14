@@ -2,6 +2,8 @@
   <img src="wordmark.png" />
 </p>
 
+⚠️ This project is a work in progress ⚠️ 
+
 ## Features
 
 - Provides a centralized repository for Nomad HCL templates
