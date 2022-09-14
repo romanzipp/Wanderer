@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+    label {
+        @apply block text-xs mb-2 font-medium text-gray-500
+    }
+
     input[type="text"] {
         @apply block w-full bg-white rounded shadow-sm border border-gray-300 px-3 py-2 text-sm
     }
@@ -21,5 +25,9 @@
 
     button.primary:hover {
         @apply bg-pink-500
+    }
+
+    .card {
+        @apply p-6 bg-white shadow rounded-md
     }
 }

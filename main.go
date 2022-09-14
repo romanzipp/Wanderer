@@ -5,15 +5,27 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/romanzipp/wanderer/routes"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 	"log"
 )
 
 func main() {
-	router := MakeRouter()
+	db := MakeDb()
+	router := MakeRouter(db)
 	log.Fatal(router.Run())
 }
 
-func MakeRouter() *gin.Engine {
+func MakeDb() *gorm.DB {
+	db, err := gorm.Open(sqlite.Open("data.db"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	return db
+}
+
+func MakeRouter(db *gorm.DB) *gin.Engine {
 	router := gin.Default()
 
 	router.HTMLRender = ginview.Default()
@@ -28,7 +40,7 @@ func MakeRouter() *gin.Engine {
 		AllowWildcard: true,
 	}))
 
-	routes.InitWebRoutes(router)
+	routes.InitWebRoutes(router, db)
 
 	return router
 }

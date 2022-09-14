@@ -9,6 +9,12 @@ Nomad deployer
 - Simple Web UI for editing templates & monitoring deployments
 - Supports Nomad instances behind Cloudflare Access
 
+## Development
+
+```shell
+gow -e=go,html run .
+```
+
 ## License
 
 Released under the [MIT License](LICENSE.md).

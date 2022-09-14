@@ -3,10 +3,11 @@ package routes
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/romanzipp/wanderer/controllers/web"
+	"gorm.io/gorm"
 )
 
-func InitWebRoutes(router *gin.Engine) {
+func InitWebRoutes(router *gin.Engine, db *gorm.DB) {
 	// --------------------------------------------
 	// authed routes
 
@@ -14,23 +15,24 @@ func InitWebRoutes(router *gin.Engine) {
 	authed.Use(AuthRequired())
 
 	authed.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index", gin.H{
-			"title": "Main website",
-		})
+		web.WebIndexController(c, db)
+	})
+
+	// servers
+
+	authed.GET("/servers/create", func(c *gin.Context) {
+		web.CreateServerController(c, db)
 	})
 
 	// --------------------------------------------
 	// login
 
 	router.GET("/auth", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "auth", gin.H{
-			"title": "Authenticate",
-		})
+		web.ShowAuthFormController(c, db)
 	})
 
 	router.POST("/auth", func(c *gin.Context) {
-		c.SetCookie("token", "ok", 3000, "/", "", false, true)
-		c.Redirect(301, "/")
+		web.SubmitAuthController(c, db)
 	})
 }
 

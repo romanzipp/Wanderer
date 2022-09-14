@@ -1,0 +1,39 @@
+{{define "content"}}
+
+<div class="w-[24rem] mx-auto card">
+
+    <h1 class="mb-6 text-2xl">
+        Create server
+    </h1>
+
+    <form action="" class="space-y-4">
+
+        <div>
+            <label for="address">Address</label>
+            <input id="address" type="text" placeholder="192.168.1.1">
+        </div>
+
+        <div>
+            <label for="port">Port</label>
+            <input id="port" type="text" placeholder="9000">
+        </div>
+
+        <div>
+            <label for="cf_access_client_id">Cloudflare Access Id</label>
+            <input id="cf_access_client_id" type="text" placeholder="*******.access">
+        </div>
+
+        <div>
+            <label for="cf_access_client_secret">Cloudflare Access Secret</label>
+            <input id="cf_access_client_secret" type="text" placeholder="*******">
+        </div>
+
+        <button type="submit" class="primary">
+            Create server
+        </button>
+
+    </form>
+
+</div>
+
+{{end}}

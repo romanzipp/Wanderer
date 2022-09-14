@@ -1,28 +1,27 @@
 {{define "content"}}
-<div class="mx-auto w-[24rem] p-6 bg-white shadow rounded-md">
+<div class="mx-auto w-[24rem] card">
 
     <h1 class="mb-6 text-2xl">
         Login
     </h1>
 
-    <form action="/auth" method="post">
+    <form action="/auth" method="post" class="space-y-4">
 
-        <label for="password" class="block text-xs mb-2 font-medium text-gray-500">
-            Password
-        </label>
-
-        <input type="text"
-               id="password"
-               name="password"
-               placeholder="**********"
-               required
-               min="2">
-
-        <div class="mt-4">
-            <button type="submit" class="primary">
-                Login
-            </button>
+        <div>
+            <label for="password">Password</label>
+            <input type="text"
+                   id="password"
+                   name="password"
+                   placeholder="**********"
+                   required
+                   min="2">
         </div>
+
+        <button type="submit" class="primary">
+            Login
+        </button>
+
     </form>
+
 </div>
 {{end}}
