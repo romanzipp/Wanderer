@@ -20,7 +20,15 @@ func InitWebRoutes(router *gin.Engine, db *gorm.DB) {
 
 	// servers
 
+	authed.GET("/servers", func(c *gin.Context) {
+		web.ListServersController(c, db)
+	})
+
 	authed.GET("/servers/create", func(c *gin.Context) {
+		web.ShowCreateServerController(c, db)
+	})
+
+	authed.POST("/servers", func(c *gin.Context) {
 		web.CreateServerController(c, db)
 	})
 
@@ -38,7 +46,7 @@ func InitWebRoutes(router *gin.Engine, db *gorm.DB) {
 
 func AuthRequired() gin.HandlerFunc {
 	abort := func(c *gin.Context) {
-		c.Redirect(301, "/auth")
+		c.Redirect(302, "/auth")
 	}
 
 	return func(c *gin.Context) {

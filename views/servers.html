@@ -1,0 +1,15 @@
+{{define "content"}}
+
+<div class="mb-6">
+    <a href="/servers/create" class="button button-primary">
+        Create server
+    </a>
+</div>
+
+{{range .servers}}
+<div class="card">
+    server {{.CreatedAt}}
+</div>
+{{end}}
+
+{{end}}

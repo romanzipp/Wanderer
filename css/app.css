@@ -7,6 +7,11 @@
         @apply block text-xs mb-2 font-medium text-gray-500
     }
 
+    label.required::after {
+        content: '*';
+        @apply ml-1 text-red-500
+    }
+
     input[type="text"] {
         @apply block w-full bg-white rounded shadow-sm border border-gray-300 px-3 py-2 text-sm
     }
@@ -15,15 +20,15 @@
         @apply outline-offset-2 outline outline-pink-400 outline-2
     }
 
-    button {
+    .button {
         @apply px-6 py-2 text-sm rounded font-medium transition-colors duration-150 shadow
     }
 
-    button.primary {
+    .button.button-primary {
         @apply bg-pink-400 text-white shadow-pink-200
     }
 
-    button.primary:hover {
+    .button.button-primary:hover {
         @apply bg-pink-500
     }
 

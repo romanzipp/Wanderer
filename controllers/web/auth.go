@@ -14,5 +14,5 @@ func ShowAuthFormController(c *gin.Context, db *gorm.DB) {
 
 func SubmitAuthController(c *gin.Context, db *gorm.DB) {
 	c.SetCookie("token", "ok", 3000, "/", "", false, true)
-	c.Redirect(301, "/")
+	c.Redirect(302, "/")
 }
