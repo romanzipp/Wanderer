@@ -8,8 +8,6 @@ import (
 )
 
 func ListServersController(c *gin.Context, db *gorm.DB) {
-	db.AutoMigrate(&models.Server{})
-
 	var servers []models.Server
 	db.Find(&servers)
 

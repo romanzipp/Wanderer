@@ -4,6 +4,7 @@ import (
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/romanzipp/wanderer/models"
 	"github.com/romanzipp/wanderer/routes"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -21,6 +22,10 @@ func MakeDb() *gorm.DB {
 	if err != nil {
 		panic("failed to connect database")
 	}
+
+	db.AutoMigrate(&models.Job{})
+	db.AutoMigrate(&models.Server{})
+	db.AutoMigrate(&models.Template{})
 
 	return db
 }
