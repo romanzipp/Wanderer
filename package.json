@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "build": "npx tailwindcss -i css/app.css -o dist/app.css --minify",
+    "watch": "npx tailwindcss -i css/app.css -o dist/app.css --watch",
+    "lint": "eslint --ext .js .",
+    "lint:fix": "yarn lint --fix"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.1.8"
+  },
+  "devDependencies": {
+    "eslint": "^8.23.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
