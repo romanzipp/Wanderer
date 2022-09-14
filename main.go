@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -9,11 +10,15 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"log"
+	"time"
 )
 
 func main() {
 	db := MakeDb()
 	router := MakeRouter(db)
+
+	go MakeCheckScheduler(db)
+
 	log.Fatal(router.Run())
 }
 
@@ -48,4 +53,22 @@ func MakeRouter(db *gorm.DB) *gin.Engine {
 	routes.InitWebRoutes(router, db)
 
 	return router
+}
+
+func MakeCheckScheduler(db *gorm.DB) {
+	for {
+		var servers []models.Server
+		db.Find(&servers)
+
+		for _, server := range servers {
+			status, err := server.Check(db)
+			if err != nil {
+				fmt.Printf("[server check] err %s\n", err)
+			} else {
+				fmt.Printf("[server check] %s = %d \n", server.Name, status)
+			}
+		}
+
+		time.Sleep(60 * time.Second)
+	}
 }

@@ -4,13 +4,16 @@ import (
 	"fmt"
 	"github.com/hashicorp/nomad/api"
 	"gorm.io/gorm"
+	"log"
 	"time"
 )
 
 type ServerStatus uint
 
 const (
-	StatusUp ServerStatus = 0
+	StatusUp      ServerStatus = 0
+	StatusErr     ServerStatus = 1
+	StatusUnknown ServerStatus = 99999
 )
 
 type Server struct {
@@ -24,9 +27,8 @@ type Server struct {
 	Status               ServerStatus
 }
 
-func (s Server) Check() {
+func (s Server) NewNomadClient() (*api.Client, error) {
 	headers := make(map[string][]string)
-
 	if s.CfAccessClientId != "" {
 		headers["CF-Access-Client-Id"] = []string{s.CfAccessClientId}
 		headers["CF-Access-Client-Secret"] = []string{s.CfAccessClientSecret}
@@ -38,16 +40,35 @@ func (s Server) Check() {
 	})
 
 	if err != nil {
-		fmt.Println("err")
-		fmt.Println(err)
+		log.Fatalf("error getting nomad client: %s", err)
+		return nil, err
+	}
+
+	return client, nil
+}
+
+func (s Server) Check(db *gorm.DB) (ServerStatus, error) {
+	client, err := s.NewNomadClient()
+	if err != nil {
+		return StatusUnknown, err
 	}
 
 	fmt.Println(client)
 
-	res, _, err := client.Jobs().List(&api.QueryOptions{})
+	jobs, _, err := client.Jobs().List(&api.QueryOptions{})
 	if err != nil {
-		fmt.Println("-----------err")
-		fmt.Println(err)
+		s.Status = StatusErr
+	} else {
+		s.Status = StatusUp
 	}
-	fmt.Println(res)
+
+	s.LastStatusCheck = time.Now()
+
+	db.Save(s)
+
+	for _, v := range jobs {
+		fmt.Println(v)
+	}
+
+	return s.Status, nil
 }

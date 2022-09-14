@@ -26,8 +26,6 @@ func ShowServerController(c *gin.Context, db *gorm.DB, serverId string) {
 		return
 	}
 
-	server.Check()
-
 	c.HTML(http.StatusOK, "server", gin.H{
 		"title":  "Server",
 		"server": server,
