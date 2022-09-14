@@ -27,12 +27,16 @@
 
     <div class="flex justify-between space-x-6 p-6 text-sm leading-normal">
         <div>
+            <div class="text-gray-500">Status</div>
+            <div>{{.Status.GetTitle}} ({{.LastStatusCheck.Format "15:04"}})</div>
+        </div>
+        <div>
             <div class="text-gray-500">Created</div>
-            <div>{{.CreatedAt}}</div>
+            <div>{{.CreatedAt.Format "2006-01-02"}}</div>
         </div>
         <div>
             <div class="text-gray-500">Updated</div>
-            <div>{{.UpdatedAt}}</div>
+            <div>{{.UpdatedAt.Format "2006-01-02"}}</div>
         </div>
         <div>
             <div class="text-gray-500">Cloudflare</div>

@@ -15,6 +15,18 @@ const (
 	StatusUnknown ServerStatus = 99999
 )
 
+func (status ServerStatus) GetTitle() string {
+	switch status {
+	case StatusUp:
+		return "Up"
+	case StatusErr:
+		return "Error"
+	case StatusUnknown:
+		return "Unknown"
+	}
+	return ""
+}
+
 type Server struct {
 	gorm.Model
 	Name                 string
