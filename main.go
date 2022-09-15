@@ -81,7 +81,7 @@ func MakeCheckScheduler(db *gorm.DB) {
 		for _, server := range servers {
 			status, err := server.Check(db)
 			if err != nil {
-				log.Debug().Msgf("[server check] err %s", err)
+				log.Warn().Msgf("[server check] %s error: %s", server.Name, err)
 			} else {
 				log.Debug().Msgf("[server check] %s = %d", server.Name, status)
 			}

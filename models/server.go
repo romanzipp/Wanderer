@@ -74,5 +74,5 @@ func (s Server) Check(db *gorm.DB) (ServerStatus, error) {
 
 	db.Save(s)
 
-	return s.Status, nil
+	return s.Status, err
 }
