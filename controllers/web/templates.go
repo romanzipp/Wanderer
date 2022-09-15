@@ -1,7 +1,6 @@
 package web
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/nomad/api"
 	"github.com/romanzipp/wanderer/models"
@@ -43,8 +42,6 @@ func ShowCreateTemplateController(c *gin.Context, db *gorm.DB) {
 			return
 		}
 	}
-
-	fmt.Println(nomadJobs[0])
 
 	c.HTML(http.StatusOK, "templates-create", gin.H{
 		"title":   "Create template",

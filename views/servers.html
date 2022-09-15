@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="flex items-center">
-            <div class="h-4 w-4 rounded-full bg-green-500"></div>
+            <div class="h-4 w-4 rounded-full {{if eq .Status 0}}bg-gray-400{{end}} {{if eq .Status 1}}bg-green-500{{end}} {{if eq .Status 2}}bg-red-500{{end}}"></div>
         </div>
     </div>
 

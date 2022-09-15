@@ -10,9 +10,9 @@ import (
 type ServerStatus uint
 
 const (
-	StatusUp      ServerStatus = 0
-	StatusErr     ServerStatus = 1
-	StatusUnknown ServerStatus = 99999
+	StatusUnknown ServerStatus = 0
+	StatusUp      ServerStatus = 1
+	StatusErr     ServerStatus = 2
 )
 
 func (status ServerStatus) GetTitle() string {

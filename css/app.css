@@ -44,12 +44,23 @@
         @apply p-3 text-sm font-medium rounded-md leading-normal
     }
 
+    .alert::before {
+        @apply block mb-1 text-xs font-semibold opacity-70 tracking-wider
+    }
+
     .alert.alert-info {
         @apply bg-blue-50 text-blue-500
     }
 
     .alert.alert-info::before {
         content: 'INFO';
-        @apply block mb-1 text-xs font-semibold opacity-70 tracking-wider
+    }
+
+    .alert.alert-error {
+        @apply bg-red-50 text-red-500
+    }
+
+    .alert.alert-error::before {
+        content: 'ERROR';
     }
 }

@@ -17,15 +17,6 @@
         <input type="hidden" name="server" value="{{.server.ID}}">
 
         <div>
-            <label for="name" class="required">Name</label>
-            <input id="name"
-                   name="name"
-                   type="text"
-                   placeholder="Web Job"
-                   required>
-        </div>
-
-        <div>
             <label for="job" class="required">Nomad Job</label>
             <select id="job"
                     name="job"
@@ -34,6 +25,15 @@
                 <option value="{{.ID}}">{{.Name}}</option>
                 {{end}}
             </select>
+        </div>
+
+        <div>
+            <label for="name" class="required">Name</label>
+            <input id="name"
+                   name="name"
+                   type="text"
+                   placeholder="Web Job"
+                   required>
         </div>
 
         <div>
@@ -50,6 +50,15 @@
         </button>
 
     </form>
+
+    {{else}}
+
+    {{if not .servers}}
+
+    <div class="alert alert-error">
+        You need to create at least one server in order to add templates.
+        <a href="/servers/create" class="font-semibold underline">Create server</a>
+    </div>
 
     {{else}}
 
@@ -75,6 +84,8 @@
         </button>
 
     </form>
+
+    {{end}}
 
     {{end}}
 
