@@ -1,0 +1,38 @@
+{{define "content"}}
+<div class="mx-auto w-[24rem]">
+
+    <div class="card">
+        <h1 class="mb-6 text-2xl">
+            API Tokens
+        </h1>
+
+        {{if .createdToken}}
+        <div class="alert alert-success mb-6">
+            <div class="mb-3">
+                Token hast been created. This secret will only be shown once.
+            </div>
+            <input type="text" value="{{.createdToken}}" class="text-gray-700" readonly focus>
+        </div>
+        {{end}}
+
+        <form action="/tokens" method="post" class="space-y-4">
+
+            <div>
+                <label for="name" class="required">Name</label>
+                <input type="text"
+                       id="name"
+                       name="name"
+                       placeholder="GitHub Actions"
+                       required
+                       min="2">
+            </div>
+
+            <button type="submit" class="button button-primary">
+                Issue API token
+            </button>
+
+        </form>
+
+    </div>
+</div>
+{{end}}

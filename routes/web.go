@@ -57,6 +57,16 @@ func InitWebRoutes(router *gin.Engine, db *gorm.DB) {
 		web.CreateTemplateController(c, db)
 	})
 
+	// api
+
+	authed.GET("/tokens", func(c *gin.Context) {
+		web.ApiController(c, db)
+	})
+
+	authed.POST("/tokens", func(c *gin.Context) {
+		web.IssueApiTokenController(c, db)
+	})
+
 	// --------------------------------------------
 	// login
 

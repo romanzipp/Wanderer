@@ -57,6 +57,14 @@
         @apply block mb-1 text-xs font-semibold opacity-70 tracking-wider
     }
 
+    .alert.alert-success {
+        @apply bg-green-50 text-green-500
+    }
+
+    .alert.alert-success::before {
+        content: 'SUCCESS';
+    }
+
     .alert.alert-info {
         @apply bg-blue-50 text-blue-500
     }
