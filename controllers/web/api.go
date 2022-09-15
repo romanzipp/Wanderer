@@ -10,11 +10,15 @@ import (
 )
 
 func ApiController(c *gin.Context, db *gorm.DB) {
+	var tokens []models.Token
+	db.Find(&tokens)
+
 	token := c.Query("token")
 	c.HTML(http.StatusOK, "api", gin.H{
 		"title":        "API",
 		"nav":          "api",
 		"createdToken": token,
+		"tokens":       tokens,
 	})
 }
 

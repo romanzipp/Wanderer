@@ -1,38 +1,82 @@
 {{define "content"}}
-<div class="mx-auto w-[24rem]">
 
-    <div class="card">
-        <h1 class="mb-6 text-2xl">
-            API Tokens
-        </h1>
+<div class="flex space-x-6">
 
-        {{if .createdToken}}
-        <div class="alert alert-success mb-6">
-            <div class="mb-3">
-                Token hast been created. This secret will only be shown once.
+    <div class="w-3/5 space-y-6">
+        <div class="card">
+            <h1 class="mb-6 text-2xl">
+                API Tokens
+            </h1>
+
+            {{if .tokens}}
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Created</th>
+                    <th>Last used</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{range .tokens}}
+                <tr>
+                    <td>{{.Name}}</td>
+                    <td>{{.CreatedAt.Format "2006-01-02 15:04"}}</td>
+                    <td>
+                        {{if not .LastUsedAt.IsZero}}
+                        {{.LastUsedAt.Format "2006-01-02 15:04"}}
+                        {{else}}
+                        <span class="text-gray-300">never</span>
+                        {{end}}
+                    </td>
+                </tr>
+                {{end}}
+                </tbody>
+            </table>
+            {{else}}
+            <div class="empty">
+                No tokens issued yet
             </div>
-            <input type="text" value="{{.createdToken}}" class="text-gray-700" readonly focus>
+            {{end}}
         </div>
-        {{end}}
-
-        <form action="/tokens" method="post" class="space-y-4">
-
-            <div>
-                <label for="name" class="required">Name</label>
-                <input type="text"
-                       id="name"
-                       name="name"
-                       placeholder="GitHub Actions"
-                       required
-                       min="2">
-            </div>
-
-            <button type="submit" class="button button-primary">
-                Issue API token
-            </button>
-
-        </form>
-
     </div>
+
+    <div class="w-2/5 space-y-6">
+
+        <div class="card">
+            <h1 class="mb-6 text-2xl">
+                Issue token
+            </h1>
+
+            {{if .createdToken}}
+            <div class="alert alert-success mb-6">
+                <div class="mb-3">
+                    Token hast been created. This secret will only be shown once.
+                </div>
+                <input type="text" value="{{.createdToken}}" class="text-gray-700" readonly focus>
+            </div>
+            {{end}}
+
+            <form action="/tokens" method="post" class="space-y-4">
+
+                <div>
+                    <label for="name" class="required">Name</label>
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           placeholder="GitHub Actions"
+                           required
+                           min="2">
+                </div>
+
+                <button type="submit" class="button button-primary">
+                    Issue API token
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
 </div>
 {{end}}

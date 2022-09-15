@@ -5,6 +5,7 @@ import (
 	"github.com/romanzipp/wanderer/controllers/api"
 	"github.com/romanzipp/wanderer/models"
 	"gorm.io/gorm"
+	"time"
 )
 
 type JsonError struct {
@@ -40,5 +41,8 @@ func ApiTokenAuth(db *gorm.DB) gin.HandlerFunc {
 			abort(c, 401, "Invalid token")
 			return
 		}
+
+		token.LastUsedAt = time.Now()
+		db.Save(token)
 	}
 }
