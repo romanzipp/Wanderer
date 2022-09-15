@@ -65,7 +65,7 @@ func DeployController(c *gin.Context, db *gorm.DB) {
 	templateVersion.LastVersion = payload.Version
 
 	// deploy
-	err = template.Deploy(db, templateVersion, payload.Version)
+	err = template.Deploy(db, &templateVersion, payload.Version)
 	if err != nil {
 		log.Warn().Err(err)
 		c.JSON(400, &ErrorResponse{err.Error()})

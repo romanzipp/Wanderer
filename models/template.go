@@ -7,6 +7,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
 	"strings"
+	"time"
 )
 
 type Template struct {
@@ -42,7 +43,7 @@ func (t Template) getPopulatedContent(db *gorm.DB, newVersion TemplateVersion) s
 	return content
 }
 
-func (t Template) Deploy(db *gorm.DB, templateVersion TemplateVersion, versionString string) error {
+func (t Template) Deploy(db *gorm.DB, templateVersion *TemplateVersion, versionString string) error {
 	if t.Server.ID == 0 {
 		return errors.New("missing server")
 	}
@@ -52,7 +53,7 @@ func (t Template) Deploy(db *gorm.DB, templateVersion TemplateVersion, versionSt
 		return err
 	}
 	// get new template content with new versions
-	payload := t.getPopulatedContent(db, templateVersion)
+	payload := t.getPopulatedContent(db, *templateVersion)
 
 	// parse job spec
 	job, err := client.Jobs().ParseHCL(payload, false)
@@ -78,6 +79,10 @@ func (t Template) Deploy(db *gorm.DB, templateVersion TemplateVersion, versionSt
 	}
 
 	log.Debug().Msgf("dispatched job '%s' mit modify index %s", *job.ID, res.JobModifyIndex)
+
+	templateVersion.LastDeployedAt = time.Now()
+
+	db.Save(templateVersion)
 
 	return nil
 }
