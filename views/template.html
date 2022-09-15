@@ -16,6 +16,7 @@
                     <th>Selector</th>
                     <th>Latest Version</th>
                     <th>Last deploy at</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,6 +36,14 @@
                         {{else}}
                         <span class="text-gray-300">none</span>
                         {{end}}
+                    </td>
+                    <td>
+                        <form method="post" action="/versions/{{.ID}}">
+                            <input type="hidden" name="template" value="">
+                            <button type="submit">
+                                Delete
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 {{end}}
