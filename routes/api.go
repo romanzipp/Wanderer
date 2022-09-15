@@ -19,18 +19,18 @@ func InitApiRoutes(router *gin.Engine, db *gorm.DB) {
 	authed.GET("/", func(c *gin.Context) {
 		api.IndexController(c, db)
 	})
+
+	authed.POST("/deploy", func(c *gin.Context) {
+		api.DeployController(c, db)
+	})
 }
 
 func ApiTokenAuth(db *gorm.DB) gin.HandlerFunc {
-	abort := func(c *gin.Context, code int, message string) {
-		c.JSON(code, JsonError{message})
-	}
-
 	return func(c *gin.Context) {
 		tokenStr := c.Request.Header.Get("Authorization")
 
 		if len(tokenStr) == 0 {
-			abort(c, 401, "Missing token")
+			c.AbortWithStatusJSON(401, JsonError{"Missing token"})
 			return
 		}
 
@@ -38,11 +38,12 @@ func ApiTokenAuth(db *gorm.DB) gin.HandlerFunc {
 		db.Where("token = ?", tokenStr).Find(&token)
 
 		if token.ID == 0 {
-			abort(c, 401, "Invalid token")
+			c.AbortWithStatusJSON(401, JsonError{"Invalid token"})
 			return
 		}
 
 		token.LastUsedAt = time.Now()
 		db.Save(token)
+		c.Next()
 	}
 }
