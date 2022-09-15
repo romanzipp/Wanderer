@@ -45,7 +45,6 @@ func CreateServerController(c *gin.Context, db *gorm.DB) {
 	db.Create(&models.Server{
 		Name:                 c.PostForm("name"),
 		Address:              c.PostForm("address"),
-		Port:                 c.PostForm("port"),
 		CfAccessClientId:     c.PostForm("cf_access_client_id"),
 		CfAccessClientSecret: c.PostForm("cf_access_client_secret"),
 	})
