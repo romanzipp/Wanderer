@@ -35,6 +35,12 @@ func InitWebRoutes(router *gin.Engine, db *gorm.DB) {
 		web.CreateServerController(c, db)
 	})
 
+	// templates
+
+	authed.GET("/templates", func(c *gin.Context) {
+		web.ListTemplatesController(c, db)
+	})
+
 	// --------------------------------------------
 	// login
 

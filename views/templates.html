@@ -1,0 +1,15 @@
+{{define "content"}}
+
+<div class="mb-6">
+    <a href="/templates/create" class="button button-primary">
+        Create template
+    </a>
+</div>
+
+{{range .templates}}
+<div>
+    template {{.id}}
+</div>
+{{end}}
+
+{{end}}
