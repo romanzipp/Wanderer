@@ -1,3 +1,133 @@
 {{define "content"}}
-index
+
+<div class="flex justify-center">
+    <div class="w-1/2">
+        <div class="card">
+            <h1 class="mb-6 text-2xl">
+                Deploy version
+            </h1>
+
+            {{if ne .server.ID 0}}
+
+            {{if ne .template.ID 0}}
+
+            <form action="/deploy" method="post" enctype="multipart/form-data" class="space-y-4">
+                <div>
+                    <label for="third_server">Server</label>
+                    <select id="third_server"
+                            name="server">
+                        <option value="{{.server.ID}}">{{.server.Name}}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="third_template">Template</label>
+                    <select id="third_template"
+                            name="template">
+                        <option value="{{.template.ID}}">{{.template.Name}}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="third_version_selector" class="required">Version Selector</label>
+                    <select id="third_version_selector"
+                            name="version_id"
+                            required>
+                        {{range .versions}}
+                        <option value="{{.ID}}">{{.Selector}}</option>
+                        {{end}}
+                    </select>
+                </div>
+                <div>
+                    <label for="third_version" class="required">Version</label>
+                    <input id="third_version"
+                           name="version"
+                           type="text"
+                           placeholder="1.0.0"
+                           required>
+                </div>
+                <button type="submit" class="button button-primary">
+                    Deploy
+                </button>
+            </form>
+
+            {{else}}
+
+            <form action="/" method="get" class="space-y-4">
+                <div>
+                    <label for="second_server">Server</label>
+                    <select id="second_server"
+                            name="server">
+                        <option value="{{.server.ID}}">{{.server.Name}}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="second_template" class="required">Template</label>
+                    <select id="second_template"
+                            name="template"
+                            required>
+                        {{range .templates}}
+                        <option value="{{.ID}}">{{.Name}}</option>
+                        {{end}}
+                    </select>
+                </div>
+                <div>
+                    <label>Version Selector</label>
+                    <select disabled>
+                        <option value="">None</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Version</label>
+                    <input type="text"
+                           placeholder="1.0.0"
+                           disabled>
+                </div>
+                <button type="submit" class="button button-primary">
+                    Next
+                </button>
+            </form>
+
+            {{end}}
+
+            {{else}}
+
+            <form action="/" method="get" class="space-y-4">
+                <div>
+                    <label for="first_server" class="required">Server</label>
+                    <select id="first_server"
+                            name="server"
+                            required>
+                        {{range .servers}}
+                        <option value="{{.ID}}">{{.Name}}</option>
+                        {{end}}
+                    </select>
+                </div>
+                <div>
+                    <label>Template</label>
+                    <select disabled>
+                        <option value="">None</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Version Selector</label>
+                    <select disabled>
+                        <option value="">None</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Version</label>
+                    <input type="text"
+                           placeholder="1.0.0"
+                           disabled>
+                </div>
+                <button type="submit" class="button button-primary">
+                    Next
+                </button>
+            </form>
+
+            {{end}}
+
+        </div>
+    </div>
+</div>
+
 {{end}}

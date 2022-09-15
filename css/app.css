@@ -24,6 +24,11 @@
         @apply block w-full bg-white rounded shadow-sm border border-gray-300 px-3 py-2 text-sm
     }
 
+    input[type="text"]:disabled, select:disabled, textarea:disabled,
+    input[type="text"]:disabled::placeholder, select:disabled::placeholder, textarea:disabled::placeholder{
+        @apply text-gray-200 cursor-not-allowed
+    }
+
     input[type="text"]:focus-visible {
         @apply outline-offset-2 outline outline-pink-400 outline-2
     }
