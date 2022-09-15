@@ -20,12 +20,12 @@
         @apply ml-1 text-red-500
     }
 
-    input[type="text"], select, textarea {
+    input[type="text"], input[type="password"], select, textarea {
         @apply block w-full bg-white rounded shadow-sm border border-gray-300 px-3 py-2 text-sm
     }
 
-    input[type="text"]:disabled, select:disabled, textarea:disabled,
-    input[type="text"]:disabled::placeholder, select:disabled::placeholder, textarea:disabled::placeholder{
+    input[type="text"]:disabled, input[type="password"]:disabled, select:disabled, textarea:disabled,
+    input[type="text"]:disabled::placeholder, input[type="password"]:disabled::placeholder, select:disabled::placeholder, textarea:disabled::placeholder {
         @apply text-gray-200 cursor-not-allowed
     }
 
