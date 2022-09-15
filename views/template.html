@@ -1,0 +1,118 @@
+{{define "content"}}
+
+<div class="flex space-x-6">
+
+    <div class="w-3/5 space-y-6">
+
+        {{if .template.Versions}}
+        <div class="card">
+            <h1 class="mb-6 text-2xl">
+                Versions
+            </h1>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Selector</th>
+                    <th>Latest Version</th>
+                    <th>Last deploy at</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{range .template.Versions}}
+                <tr>
+                    <td>{{.Selector}}</td>
+                    <td>
+                        {{if .LastVersion}}
+                        {{.LastVersion}}
+                        {{else}}
+                        <span class="text-gray-300">none</span>
+                        {{end}}
+                    </td>
+                    <td>
+                        {{if not .LastDeployedAt.IsZero}}
+                        {{.LastDeployedAt.Format "2006-01-02 15:04"}}
+                        {{else}}
+                        <span class="text-gray-300">none</span>
+                        {{end}}
+                    </td>
+                </tr>
+                {{end}}
+                </tbody>
+            </table>
+        </div>
+        {{end}}
+
+        <div class="card">
+            <h1 class="mb-6 text-2xl">
+                Add version
+            </h1>
+
+            <p class="mb-6">
+                A version is a placeholder contained in a template surrounded by two curly brackets.
+                The template syntax <code>&#123;&#123; VERSION &#125;&#125;</code> will match to the selector "<code>VERSION</code>".
+            </p>
+
+            <form action="/templates/{{.template.ID}}/versions" method="post" enctype="multipart/form-data"
+                  class="block space-y-4">
+
+                <div>
+                    <label for="version_selector" class="required">Selector</label>
+                    <input id="version_selector"
+                           name="selector"
+                           type="text"
+                           placeholder="FRONTEND_VERSION"
+                           required>
+                </div>
+
+                <button type="submit" class="button button-primary">
+                    Add version
+                </button>
+
+            </form>
+        </div>
+
+    </div>
+
+    <div class="w-2/5">
+        <div class="card">
+
+            <h1 class="mb-6 text-2xl">
+                {{.template.Name}}
+            </h1>
+
+            <form action="/templates" method="post" enctype="multipart/form-data" class="space-y-4">
+
+                <input type="hidden" name="server" value="{{.template.ServerID}}">
+
+                <div>
+                    <label for="name" class="required">Name</label>
+                    <input id="name"
+                           name="name"
+                           type="text"
+                           placeholder="Web Job"
+                           value="{{.template.Name}}"
+                           required>
+                </div>
+
+                <div>
+                    <label for="content" class="required">Template</label>
+                    <textarea id="content"
+                              name="content"
+                              rows="8"
+                              placeholder="job 'my-web-server' { datacenter = ['dc1'] }"
+                              required>{{.template.Content}}</textarea>
+                </div>
+
+                <button type="submit" class="button button-primary">
+                    Update template
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{{end}}

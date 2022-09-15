@@ -51,6 +51,28 @@
     </div>
     {{end}}
 
+    {{if .Versions}}
+
+    <div class="h-px w-full bg-gray-200"></div>
+
+    <div class="p-6 pb-0 uppercase text-gray-500 font-medium">
+        Versions
+    </div>
+
+    <div class="flex justify-between space-x-6 p-6 text-sm leading-normal">
+        {{range .Versions}}
+        <div>
+            <div class="text-gray-500">{{.Selector}}</div>
+            <div>{{.ID}}</div>
+        </div>
+        {{end}}
+    </div>
+    {{end}}
+
+    <a href="/templates/{{.ID}}" class="block bg-gray-100 hover:bg-gray-200 transition-colors duration-150 px-6 py-3 text-center font-medium text-gray-400 hover:text-gray-500">
+        Show template
+    </a>
+
 </div>
 
 {{end}}

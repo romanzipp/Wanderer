@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+    p {
+        @apply text-sm text-gray-500
+    }
+
     form {
         @apply block
     }
@@ -70,5 +74,45 @@
 
     .link {
         @apply font-medium underline text-pink-700 hover:text-pink-900
+    }
+
+    table {
+        @apply w-full text-left
+    }
+
+    table thead {
+        @apply rounded-md overflow-hidden
+    }
+
+    table thead tr th {
+        @apply bg-gray-100 px-2 py-2 text-xs text-gray-500 font-medium uppercase tracking-wide
+    }
+
+    table thead tr th:first-child {
+        @apply rounded-tl-md
+    }
+
+    table thead tr th:last-child {
+        @apply rounded-tr-md
+    }
+
+    table tbody {
+        @apply text-sm
+    }
+
+    table tbody tr td {
+        @apply py-2 px-2 bg-gray-50
+    }
+
+    table tbody tr td:first-child {
+        @apply rounded-bl-md
+    }
+
+    table tbody tr td:last-child {
+        @apply rounded-br-md
+    }
+
+    table tbody tr:not(:last-child) td {
+        @apply border-b border-gray-100
     }
 }

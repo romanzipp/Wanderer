@@ -44,6 +44,7 @@ func MakeDb() *gorm.DB {
 
 	db.AutoMigrate(&models.Server{})
 	db.AutoMigrate(&models.Template{})
+	db.AutoMigrate(&models.TemplateVersion{})
 
 	return db
 }

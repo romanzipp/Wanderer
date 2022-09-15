@@ -12,6 +12,7 @@ type Template struct {
 	Content    string
 	Server     Server
 	ServerID   int
+	Versions   []TemplateVersion
 }
 
 func (t Template) GetNomadJobUrl() string {

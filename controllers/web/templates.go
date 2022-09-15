@@ -11,12 +11,28 @@ import (
 
 func ListTemplatesController(c *gin.Context, db *gorm.DB) {
 	var templates []models.Template
-	db.Preload("Server").Find(&templates)
+	db.Model(&models.Template{}).Preload("Server").Preload("Versions").Find(&templates)
 
 	c.HTML(http.StatusOK, "templates", gin.H{
 		"title":     "Templates",
 		"nav":       "templates",
 		"templates": templates,
+	})
+}
+
+func ShowTemplateController(c *gin.Context, db *gorm.DB, templateID string) {
+	var template models.Template
+	db.Preload("Versions").First(&template, templateID)
+
+	if template.ID == 0 {
+		c.Redirect(302, "/templates")
+		return
+	}
+
+	c.HTML(http.StatusOK, "template", gin.H{
+		"title":    "Template",
+		"nav":      "templates",
+		"template": template,
 	})
 }
 
