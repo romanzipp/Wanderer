@@ -2,7 +2,7 @@
   <img src="wordmark.png" />
 </p>
 
-⚠️ This project is a work in progress ⚠️ 
+⚠️ This project is a work in progress ⚠️ See [**Development Project**](https://github.com/users/romanzipp/projects/2/views/1) for more details.
 
 ## Features
 
