@@ -6,10 +6,59 @@
     </a>
 </div>
 
+{{if .templates}}
 {{range .templates}}
-<div>
-    template {{.ID}}
+
+<div class="card p-0 overflow-hidden">
+
+    <div class="flex justify-between p-6">
+        <div>
+            <div class="text-lg text-gray-800">
+                {{.Name}}
+            </div>
+            <div class="text-gray-500 text-sm">
+                {{.NomadJobID}}
+            </div>
+        </div>
+    </div>
+
+    <div class="h-px w-full bg-gray-200"></div>
+
+    {{if ne .Server.ID 0}}
+
+    <div class="flex justify-between space-x-6 p-6 text-sm leading-normal">
+        <div>
+            <div class="text-gray-500">Server</div>
+            <div>{{.Server.Name}}</div>
+        </div>
+        <div>
+            <div class="text-gray-500">Nomad Job</div>
+            <a href="{{.GetNomadJobUrl}}" target="_blank" class="link">{{.NomadJobID}}</a>
+        </div>
+        <div>
+            <div class="text-gray-500">Created</div>
+            <div>{{.CreatedAt.Format "2006-01-02"}}</div>
+        </div>
+        <div>
+            <div class="text-gray-500">Updated</div>
+            <div>{{.UpdatedAt.Format "2006-01-02"}}</div>
+        </div>
+    </div>
+
+    {{else}}
+    <div class="alert alert-error m-4">
+        The associated server ({{.ServerID}}) is not available
+    </div>
+    {{end}}
+
+</div>
+
+{{end}}
+{{else}}
+<div class="empty">
+    No templates created yet
 </div>
 {{end}}
+
 
 {{end}}

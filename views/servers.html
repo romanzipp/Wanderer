@@ -6,7 +6,9 @@
     </a>
 </div>
 
+{{if .servers}}
 {{range .servers}}
+
 <div class="card p-0 overflow-hidden">
 
     <div class="flex justify-between p-6">
@@ -47,6 +49,12 @@
     <a href="/servers/{{.ID}}" class="block bg-gray-100 hover:bg-gray-200 transition-colors duration-150 px-6 py-3 text-center font-medium text-gray-400 hover:text-gray-500">
         Show server
     </a>
+</div>
+
+{{end}}
+{{else}}
+<div class="empty">
+    No servers created yet
 </div>
 {{end}}
 

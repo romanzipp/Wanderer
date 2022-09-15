@@ -6,11 +6,12 @@ import (
 	"github.com/romanzipp/wanderer/models"
 	"gorm.io/gorm"
 	"net/http"
+	"strconv"
 )
 
 func ListTemplatesController(c *gin.Context, db *gorm.DB) {
 	var templates []models.Template
-	db.Find(&templates)
+	db.Preload("Server").Find(&templates)
 
 	c.HTML(http.StatusOK, "templates", gin.H{
 		"title":     "Templates",
@@ -53,11 +54,13 @@ func ShowCreateTemplateController(c *gin.Context, db *gorm.DB) {
 }
 
 func CreateTemplateController(c *gin.Context, db *gorm.DB) {
+	serverID, _ := strconv.ParseInt(c.PostForm("server"), 10, 64)
 	db.Create(&models.Template{
 		Name:       c.PostForm("name"),
 		NomadJobID: c.PostForm("job"),
 		Content:    c.PostForm("content"),
+		ServerID:   int(serverID),
 	})
 
-	c.Redirect(302, "/servers")
+	c.Redirect(302, "/templates")
 }
