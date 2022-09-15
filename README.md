@@ -13,12 +13,30 @@
 
 Build with [Go](https://go.dev/), [Tailwind CSS](https://tailwindcss.com/) und [SQLite](https://sqlite.org/).
 
+## Docker
+
+#### Build
+
+```shell
+docker build -t wanderer:latest .
+```
+
+#### Run
+
+```shell
+docker run \
+  -v "$(pwd)/data.db:/data.db" \
+  -v "$(pwd)/.env:/.env" \
+  wanderer:latest
+```
+
 ## Development
 
 ### Requirements
 
 - Go 1.19+
 - Yarn
+- _Docker_
 
 ### Go app
 
