@@ -11,34 +11,45 @@
 <div class="flex flex-col justify-between min-h-screen">
 
     <div>
-    <nav class="flex justify-between bg-pink-500 text-white px-6">
+        <nav class="flex justify-between bg-pink-500 text-white px-6">
 
-        <div class="flex items-center text-lg py-4 font-semibold">
-            <img src="/assets/logo-white.svg" alt="Logo" class="h-6 mr-2">
-            <div>Wanderer</div>
-        </div>
+            <div class="flex items-center text-lg py-4 font-semibold">
+                <img src="/assets/logo-white.svg" alt="Logo" class="h-6 mr-2">
+                <div>Wanderer</div>
+            </div>
 
-        <div class="flex space-x-4">
-            <a href="/" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 {{if eq .nav "index"}}bg-white/20{{end}}">
-                Home
-            </a>
-            <a href="/servers" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 {{if eq .nav "servers"}}bg-white/20{{end}}">
-                Servers
-            </a>
-            <a href="/templates" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 {{if eq .nav "templates"}}bg-white/20{{end}}">
-                Templates
-            </a>
-            <a href="/tokens" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 {{if eq .nav "api"}}bg-white/20{{end}}">
-                API
-            </a>
-        </div>
+            <div class="flex space-x-4">
+                <a href="/" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 {{if eq .nav "index"}}bg-white/20{{end}}">
+                    Home
+                </a>
+                <a href="/servers" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 {{if eq .nav "servers"}}bg-white/20{{end}}">
+                    Servers
+                </a>
+                <a href="/templates" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 {{if eq .nav "templates"}}bg-white/20{{end}}">
+                    Templates
+                </a>
+                <a href="/tokens" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 {{if eq .nav "api"}}bg-white/20{{end}}">
+                    API
+                </a>
+            </div>
 
-        <div></div>
-    </nav>
+            <div></div>
+        </nav>
 
-    <main class="container mx-auto mt-12">
-        {{template "content" .}}
-    </main>
+        <main class="container mx-auto mt-12">
+
+            <div class="flex justify-center">
+                <div class="min-w-[24rem]">
+                    {{if .success}}
+                    <div class="alert alert-success mb-6">
+                        {{.success}}
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+
+            {{template "content" .}}
+        </main>
     </div>
 
     <footer class="mt-16 border-t border-gray-100 py-8 text-sm text-gray-400">

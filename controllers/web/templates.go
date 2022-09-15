@@ -1,6 +1,7 @@
 package web
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/nomad/api"
 	"github.com/romanzipp/wanderer/models"
@@ -33,7 +34,19 @@ func ShowTemplateController(c *gin.Context, db *gorm.DB, templateID string) {
 		"title":    "Template",
 		"nav":      "templates",
 		"template": template,
+		"success":  c.Query("success"),
 	})
+}
+
+func UpdateTemplateController(c *gin.Context, db *gorm.DB, templateID string) {
+	serverID, _ := strconv.ParseInt(c.PostForm("server"), 10, 64)
+	templateIDConv, _ := strconv.ParseInt(templateID, 10, 64)
+	template := fillTemplate(c, uint(serverID))
+	template.ID = uint(templateIDConv)
+
+	db.Save(template)
+
+	c.Redirect(302, fmt.Sprintf("/templates/%s?success=Template+updated", templateID))
 }
 
 func ShowCreateTemplateController(c *gin.Context, db *gorm.DB) {
@@ -71,12 +84,18 @@ func ShowCreateTemplateController(c *gin.Context, db *gorm.DB) {
 
 func CreateTemplateController(c *gin.Context, db *gorm.DB) {
 	serverID, _ := strconv.ParseInt(c.PostForm("server"), 10, 64)
-	db.Create(&models.Template{
+	template := fillTemplate(c, uint(serverID))
+
+	db.Create(&template)
+
+	c.Redirect(302, "/templates?success=Template+created")
+}
+
+func fillTemplate(c *gin.Context, serverID uint) models.Template {
+	return models.Template{
 		Name:       c.PostForm("name"),
 		NomadJobID: c.PostForm("job"),
 		Content:    c.PostForm("content"),
-		ServerID:   uint(serverID),
-	})
-
-	c.Redirect(302, "/templates")
+		ServerID:   serverID,
+	}
 }

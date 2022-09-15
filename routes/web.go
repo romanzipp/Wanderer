@@ -27,6 +27,10 @@ func InitWebRoutes(router *gin.Engine, db *gorm.DB) {
 		web.ShowServerController(c, db, c.Param("id"))
 	})
 
+	authed.POST("/servers/:id", func(c *gin.Context) {
+		web.UpdateServerController(c, db, c.Param("id"))
+	})
+
 	authed.GET("/servers/create", func(c *gin.Context) {
 		web.ShowCreateServerController(c, db)
 	})
@@ -43,6 +47,10 @@ func InitWebRoutes(router *gin.Engine, db *gorm.DB) {
 
 	authed.GET("/templates/:id", func(c *gin.Context) {
 		web.ShowTemplateController(c, db, c.Param("id"))
+	})
+
+	authed.POST("/templates/:id", func(c *gin.Context) {
+		web.UpdateTemplateController(c, db, c.Param("id"))
 	})
 
 	authed.POST("/templates/:id/versions", func(c *gin.Context) {

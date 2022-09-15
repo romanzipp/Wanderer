@@ -90,7 +90,7 @@
                 {{.template.Name}}
             </h1>
 
-            <form action="/templates" method="post" enctype="multipart/form-data" class="space-y-4">
+            <form action="/templates/{{.template.ID}}" method="post" enctype="multipart/form-data" class="space-y-4">
 
                 <input type="hidden" name="server" value="{{.template.ServerID}}">
 

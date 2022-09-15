@@ -16,5 +16,5 @@ func CreateVersionController(c *gin.Context, db *gorm.DB, templateID string) {
 		TemplateID:  int(templateIDConv),
 	})
 
-	c.Redirect(302, fmt.Sprintf("/templates/%s", templateID))
+	c.Redirect(302, fmt.Sprintf("/templates/%s?success=Version+created", templateID))
 }

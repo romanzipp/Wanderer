@@ -29,5 +29,5 @@ func IssueApiTokenController(c *gin.Context, db *gorm.DB) {
 		Token: token,
 	})
 
-	c.Redirect(302, fmt.Sprintf("/tokens?token=%s", token))
+	c.Redirect(302, fmt.Sprintf("/tokens?token=%s&success=Token+issued", token))
 }

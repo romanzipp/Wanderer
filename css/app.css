@@ -50,7 +50,7 @@
     }
 
     .alert {
-        @apply p-3 text-sm font-medium rounded-md leading-normal
+        @apply p-3 text-sm font-medium rounded-md leading-normal border-2
     }
 
     .alert::before {
@@ -58,7 +58,7 @@
     }
 
     .alert.alert-success {
-        @apply bg-green-50 text-green-500
+        @apply bg-green-50 text-green-500 border-green-200
     }
 
     .alert.alert-success::before {
@@ -66,7 +66,7 @@
     }
 
     .alert.alert-info {
-        @apply bg-blue-50 text-blue-500
+        @apply bg-blue-50 text-blue-500 border-blue-200
     }
 
     .alert.alert-info::before {
@@ -74,7 +74,7 @@
     }
 
     .alert.alert-error {
-        @apply bg-red-50 text-red-500
+        @apply bg-red-50 text-red-500 border-red-200
     }
 
     .alert.alert-error::before {
