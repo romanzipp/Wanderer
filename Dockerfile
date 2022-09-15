@@ -25,6 +25,7 @@ WORKDIR /
 
 COPY --from=build /wanderer /wanderer
 COPY --from=build-frontend /dist/app.css /dist/app.css
+COPY --from=build-frontend /static /static
 
 EXPOSE 8080
 
