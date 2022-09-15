@@ -42,7 +42,6 @@ func MakeDb() *gorm.DB {
 		panic("failed to connect database")
 	}
 
-	db.AutoMigrate(&models.Job{})
 	db.AutoMigrate(&models.Server{})
 	db.AutoMigrate(&models.Template{})
 

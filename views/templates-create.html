@@ -1,0 +1,83 @@
+{{define "content"}}
+
+<div class="w-[24rem] mx-auto card">
+
+    <h1 class="mb-6 text-2xl">
+        Create template
+    </h1>
+
+    <p class="mb-6 text-sm text-gray-500">
+        A template contains the job definition in HCL syntax.
+    </p>
+
+    {{if ne .server.ID 0}}
+
+    <form action="/templates" method="post" enctype="multipart/form-data" class="space-y-4">
+
+        <input type="hidden" name="server" value="{{.server.ID}}">
+
+        <div>
+            <label for="name" class="required">Name</label>
+            <input id="name"
+                   name="name"
+                   type="text"
+                   placeholder="Web Job"
+                   required>
+        </div>
+
+        <div>
+            <label for="job" class="required">Nomad Job</label>
+            <select id="job"
+                    name="job"
+                    required>
+                {{range .jobs}}
+                <option value="{{.ID}}">{{.Name}}</option>
+                {{end}}
+            </select>
+        </div>
+
+        <div>
+            <label for="content" class="required">Template</label>
+            <textarea id="content"
+                      name="content"
+                      rows="8"
+                      placeholder="job 'my-web-server' { datacenter = ['dc1'] }"
+                      required></textarea>
+        </div>
+
+        <button type="submit" class="button button-primary">
+            Create template
+        </button>
+
+    </form>
+
+    {{else}}
+
+    <div class="alert alert-info mb-4">
+        Select the server associated to the template
+    </div>
+
+    <form action="/templates/create" method="get" class="block space-y-4">
+
+        <div>
+            <label for="server" class="required">Server</label>
+            <select id="server"
+                    name="server"
+                    required>
+                {{range .servers}}
+                <option value="{{.ID}}">{{.Name}}</option>
+                {{end}}
+            </select>
+        </div>
+
+        <button type="submit" class="button button-primary">
+            Continue
+        </button>
+
+    </form>
+
+    {{end}}
+
+</div>
+
+{{end}}

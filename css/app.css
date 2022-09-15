@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+    form {
+        @apply block
+    }
+
     label {
         @apply block text-xs mb-2 font-medium text-gray-500
     }
@@ -12,7 +16,7 @@
         @apply ml-1 text-red-500
     }
 
-    input[type="text"] {
+    input[type="text"], select, textarea {
         @apply block w-full bg-white rounded shadow-sm border border-gray-300 px-3 py-2 text-sm
     }
 
@@ -34,5 +38,18 @@
 
     .card {
         @apply p-6 bg-white shadow rounded-md
+    }
+
+    .alert {
+        @apply p-3 text-sm font-medium rounded-md leading-normal
+    }
+
+    .alert.alert-info {
+        @apply bg-blue-50 text-blue-500
+    }
+
+    .alert.alert-info::before {
+        content: 'INFO';
+        @apply block mb-1 text-xs font-semibold opacity-70 tracking-wider
     }
 }
