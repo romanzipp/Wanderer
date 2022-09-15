@@ -11,10 +11,10 @@ func InitWebRoutes(router *gin.Engine, db *gorm.DB) {
 	// authed routes
 
 	authed := router.Group("/")
-	authed.Use(AuthRequired())
+	authed.Use(WebTokenAuth())
 
 	authed.GET("/", func(c *gin.Context) {
-		web.WebIndexController(c, db)
+		web.IndexController(c, db)
 	})
 
 	// servers
@@ -69,7 +69,7 @@ func InitWebRoutes(router *gin.Engine, db *gorm.DB) {
 	})
 }
 
-func AuthRequired() gin.HandlerFunc {
+func WebTokenAuth() gin.HandlerFunc {
 	abort := func(c *gin.Context) {
 		c.Redirect(302, "/auth")
 	}

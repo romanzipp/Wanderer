@@ -30,6 +30,12 @@ docker run \
   wanderer:latest
 ```
 
+## API
+
+### Authentication
+
+**Header**: `Authorization: <token>`
+
 ## Development
 
 ### Requirements

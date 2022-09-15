@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func WebIndexController(c *gin.Context, db *gorm.DB) {
+func IndexController(c *gin.Context, db *gorm.DB) {
 	var templates []models.Template
 	var servers []models.Server
 

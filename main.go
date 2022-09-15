@@ -66,6 +66,7 @@ func MakeRouter(db *gorm.DB) *gin.Engine {
 		AllowWildcard: true,
 	}))
 
+	routes.InitApiRoutes(router, db)
 	routes.InitWebRoutes(router, db)
 
 	return router
