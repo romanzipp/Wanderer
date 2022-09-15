@@ -13,6 +13,7 @@ func ListServersController(c *gin.Context, db *gorm.DB) {
 
 	c.HTML(http.StatusOK, "servers", gin.H{
 		"title":   "Server",
+		"nav":     "servers",
 		"servers": servers,
 	})
 }
@@ -28,6 +29,7 @@ func ShowServerController(c *gin.Context, db *gorm.DB, serverId string) {
 
 	c.HTML(http.StatusOK, "server", gin.H{
 		"title":  "Server",
+		"nav":    "servers",
 		"server": server,
 	})
 }
@@ -35,6 +37,7 @@ func ShowServerController(c *gin.Context, db *gorm.DB, serverId string) {
 func ShowCreateServerController(c *gin.Context, db *gorm.DB) {
 	c.HTML(http.StatusOK, "servers-create", gin.H{
 		"title": "Create server",
+		"nav":   "servers",
 	})
 }
 

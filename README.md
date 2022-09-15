@@ -11,6 +11,8 @@
 - Simple Web UI for editing templates & monitoring deployments
 - Supports Nomad instances behind Cloudflare Access Zero Trust network
 
+Build with [Go](https://go.dev/), [Tailwind CSS](https://tailwindcss.com/) und [SQLite](https://sqlite.org/).
+
 ## Development
 
 ### Requirements

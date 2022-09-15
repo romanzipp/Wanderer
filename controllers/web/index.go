@@ -8,6 +8,7 @@ import (
 
 func WebIndexController(c *gin.Context, db *gorm.DB) {
 	c.HTML(http.StatusOK, "index", gin.H{
-		"title": "Main website",
+		"title": "Home",
+		"nav":   "index",
 	})
 }

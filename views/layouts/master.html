@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{.title}}</title>
+    <title>{{.title}} - Wanderer</title>
     <link rel="stylesheet" href="/dist/app.css">
     <link rel="icon" href="/assets/logo.svg">
 </head>
@@ -17,11 +17,14 @@
         </div>
 
         <div class="flex space-x-4">
-            <a href="/" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 border-b-4 border-pink-300">
+            <a href="/" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 {{if eq .nav "index"}}bg-white/20{{end}}">
                 Home
             </a>
-            <a href="/servers" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 border-b-4 border-pink-300">
+            <a href="/servers" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 {{if eq .nav "servers"}}bg-white/20{{end}}">
                 Servers
+            </a>
+            <a href="/templates" class="flex items-center px-6 transition-colors duration-150 hover:bg-white/20 {{if eq .nav "templates"}}bg-white/20{{end}}">
+                Templates
             </a>
         </div>
 

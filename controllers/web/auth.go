@@ -9,6 +9,7 @@ import (
 func ShowAuthFormController(c *gin.Context, db *gorm.DB) {
 	c.HTML(http.StatusOK, "auth", gin.H{
 		"title": "Authenticate",
+		"nav":   "index",
 	})
 }
 
