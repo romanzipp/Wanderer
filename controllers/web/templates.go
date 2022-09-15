@@ -75,7 +75,7 @@ func CreateTemplateController(c *gin.Context, db *gorm.DB) {
 		Name:       c.PostForm("name"),
 		NomadJobID: c.PostForm("job"),
 		Content:    c.PostForm("content"),
-		ServerID:   int(serverID),
+		ServerID:   uint(serverID),
 	})
 
 	c.Redirect(302, "/templates")
