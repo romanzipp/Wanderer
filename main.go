@@ -1,25 +1,39 @@
 package main
 
 import (
-	"fmt"
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/romanzipp/wanderer/models"
 	"github.com/romanzipp/wanderer/routes"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"log"
+	"os"
 	"time"
 )
 
 func main() {
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
+	if gin.IsDebugging() {
+		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	}
+
+	log.Logger = log.Output(
+		zerolog.ConsoleWriter{
+			Out:     os.Stderr,
+			NoColor: false,
+		},
+	)
+
 	db := MakeDb()
 	router := MakeRouter(db)
 
 	go MakeCheckScheduler(db)
 
-	log.Fatal(router.Run())
+	log.Fatal().Err(router.Run())
 }
 
 func MakeDb() *gorm.DB {
@@ -43,6 +57,8 @@ func MakeRouter(db *gorm.DB) *gin.Engine {
 	router.Static("/dist", "./dist")
 	router.Static("/assets", "./static")
 
+	router.Use(logger.SetLogger())
+
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:  []string{"*"},
 		AllowMethods:  []string{"*"},
@@ -63,9 +79,9 @@ func MakeCheckScheduler(db *gorm.DB) {
 		for _, server := range servers {
 			status, err := server.Check(db)
 			if err != nil {
-				fmt.Printf("[server check] err %s\n", err)
+				log.Debug().Msgf("[server check] err %s", err)
 			} else {
-				fmt.Printf("[server check] %s = %d \n", server.Name, status)
+				log.Debug().Msgf("[server check] %s = %d", server.Name, status)
 			}
 		}
 
