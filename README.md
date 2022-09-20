@@ -13,6 +13,8 @@
 
 Built with [Go](https://go.dev/), [Tailwind CSS](https://tailwindcss.com/) und [SQLite](https://sqlite.org/).
 
+![](diagram.png)
+
 ## Docker
 
 #### Build
