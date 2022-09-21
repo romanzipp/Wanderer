@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/models"
-	"gorm.io/gorm"
 	"net/http"
 )
 
-func ApiController(c *gin.Context, db *gorm.DB) {
+func ApiController(c *gin.Context, app *application.App) {
 	var tokens []models.Token
-	db.Find(&tokens)
+	app.DB.Find(&tokens)
 
 	token := c.Query("token")
 	c.HTML(http.StatusOK, "api", gin.H{
@@ -22,9 +22,9 @@ func ApiController(c *gin.Context, db *gorm.DB) {
 	})
 }
 
-func IssueApiTokenController(c *gin.Context, db *gorm.DB) {
+func IssueApiTokenController(c *gin.Context, app *application.App) {
 	token := uuid.NewString()
-	db.Create(&models.Token{
+	app.DB.Create(&models.Token{
 		Name:  c.PostForm("name"),
 		Token: token,
 	})

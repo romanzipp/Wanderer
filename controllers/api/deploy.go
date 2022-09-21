@@ -2,9 +2,9 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/models"
 	"github.com/rs/zerolog/log"
-	"gorm.io/gorm"
 )
 
 type DeployPayload struct {
@@ -22,7 +22,7 @@ type SuccessResponse struct {
 	Message string `json:"message"`
 }
 
-func DeployController(c *gin.Context, db *gorm.DB) {
+func DeployController(c *gin.Context, app *application.App) {
 	var payload DeployPayload
 	err := c.BindJSON(&payload)
 	if err != nil {
@@ -36,14 +36,14 @@ func DeployController(c *gin.Context, db *gorm.DB) {
 	var templateVersion models.TemplateVersion
 
 	// find server
-	db.First(&server, payload.Server)
+	app.DB.First(&server, payload.Server)
 	if server.ID == 0 {
 		c.JSON(422, &ErrorResponse{"invalid server id"})
 		return
 	}
 
 	// find template
-	db.Where("nomad_job_id = ?", payload.Job).Preload("Server").Find(&template)
+	app.DB.Where("nomad_job_id = ?", payload.Job).Preload("Server").Find(&template)
 	if template.ID == 0 {
 		c.JSON(422, &ErrorResponse{"invalid job id"})
 		return
@@ -55,7 +55,7 @@ func DeployController(c *gin.Context, db *gorm.DB) {
 	}
 
 	// get template version for provided selector
-	db.Where("selector = ?", payload.Selector).Where("template_id = ?", template.ID).Find(&templateVersion)
+	app.DB.Where("selector = ?", payload.Selector).Where("template_id = ?", template.ID).Find(&templateVersion)
 	if templateVersion.ID == 0 {
 		c.JSON(422, &ErrorResponse{"invalid template selector"})
 		return
@@ -65,7 +65,7 @@ func DeployController(c *gin.Context, db *gorm.DB) {
 	templateVersion.LastVersion = payload.Version
 
 	// deploy
-	err = template.Deploy(db, &templateVersion, payload.Version)
+	err = template.Deploy(app.DB, &templateVersion, payload.Version)
 	if err != nil {
 		log.Warn().Err(err)
 		c.JSON(400, &ErrorResponse{err.Error()})

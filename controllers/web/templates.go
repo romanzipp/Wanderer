@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/nomad/api"
+	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/models"
-	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 )
 
-func ListTemplatesController(c *gin.Context, db *gorm.DB) {
+func ListTemplatesController(c *gin.Context, app *application.App) {
 	var templates []models.Template
-	db.Model(&models.Template{}).Preload("Server").Preload("Versions").Find(&templates)
+	app.DB.Model(&models.Template{}).Preload("Server").Preload("Versions").Find(&templates)
 
 	c.HTML(http.StatusOK, "templates", gin.H{
 		"title":     "Templates",
@@ -21,9 +21,9 @@ func ListTemplatesController(c *gin.Context, db *gorm.DB) {
 	})
 }
 
-func ShowTemplateController(c *gin.Context, db *gorm.DB, templateID string) {
+func ShowTemplateController(c *gin.Context, app *application.App, templateID string) {
 	var template models.Template
-	db.Preload("Versions").First(&template, templateID)
+	app.DB.Preload("Versions").First(&template, templateID)
 
 	if template.ID == 0 {
 		c.Redirect(302, "/templates")
@@ -38,24 +38,24 @@ func ShowTemplateController(c *gin.Context, db *gorm.DB, templateID string) {
 	})
 }
 
-func UpdateTemplateController(c *gin.Context, db *gorm.DB, templateID string) {
+func UpdateTemplateController(c *gin.Context, app *application.App, templateID string) {
 	serverID, _ := strconv.ParseInt(c.PostForm("server"), 10, 64)
 	templateIDConv, _ := strconv.ParseInt(templateID, 10, 64)
 	template := fillTemplate(c, uint(serverID))
 	template.ID = uint(templateIDConv)
 
-	db.Save(template)
+	app.DB.Save(template)
 
 	c.Redirect(302, fmt.Sprintf("/templates/%s?success=Template+updated", templateID))
 }
 
-func ShowCreateTemplateController(c *gin.Context, db *gorm.DB) {
+func ShowCreateTemplateController(c *gin.Context, app *application.App) {
 	var servers []models.Server
-	db.Find(&servers)
+	app.DB.Find(&servers)
 
 	var selectedServer models.Server
 	if c.Query("server") != "" {
-		db.First(&selectedServer, c.Query("server"))
+		app.DB.First(&selectedServer, c.Query("server"))
 	}
 
 	var nomadJobs []*api.JobListStub
@@ -82,11 +82,11 @@ func ShowCreateTemplateController(c *gin.Context, db *gorm.DB) {
 	})
 }
 
-func CreateTemplateController(c *gin.Context, db *gorm.DB) {
+func CreateTemplateController(c *gin.Context, app *application.App) {
 	serverID, _ := strconv.ParseInt(c.PostForm("server"), 10, 64)
 	template := fillTemplate(c, uint(serverID))
 
-	db.Create(&template)
+	app.DB.Create(&template)
 
 	c.Redirect(302, "/templates?success=Template+created")
 }

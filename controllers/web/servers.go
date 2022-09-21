@@ -3,15 +3,15 @@ package web
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/models"
-	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 )
 
-func ListServersController(c *gin.Context, db *gorm.DB) {
+func ListServersController(c *gin.Context, app *application.App) {
 	var servers []models.Server
-	db.Find(&servers)
+	app.DB.Find(&servers)
 
 	c.HTML(http.StatusOK, "servers", gin.H{
 		"title":   "Server",
@@ -20,9 +20,9 @@ func ListServersController(c *gin.Context, db *gorm.DB) {
 	})
 }
 
-func ShowServerController(c *gin.Context, db *gorm.DB, serverID string) {
+func ShowServerController(c *gin.Context, app *application.App, serverID string) {
 	var server models.Server
-	db.First(&server, serverID)
+	app.DB.First(&server, serverID)
 
 	if server.ID == 0 {
 		c.Redirect(302, "/servers")
@@ -37,26 +37,26 @@ func ShowServerController(c *gin.Context, db *gorm.DB, serverID string) {
 	})
 }
 
-func UpdateServerController(c *gin.Context, db *gorm.DB, serverID string) {
+func UpdateServerController(c *gin.Context, app *application.App, serverID string) {
 	serverIDConv, _ := strconv.ParseInt(serverID, 10, 64)
 	server := fillServer(c)
 	server.ID = uint(serverIDConv)
 
-	db.Save(server)
+	app.DB.Save(server)
 
 	c.Redirect(302, fmt.Sprintf("/servers/%s?success=Server+updated", serverID))
 }
 
-func ShowCreateServerController(c *gin.Context, db *gorm.DB) {
+func ShowCreateServerController(c *gin.Context, app *application.App) {
 	c.HTML(http.StatusOK, "servers-create", gin.H{
 		"title": "Create server",
 		"nav":   "servers",
 	})
 }
 
-func CreateServerController(c *gin.Context, db *gorm.DB) {
+func CreateServerController(c *gin.Context, app *application.App) {
 	server := fillServer(c)
-	db.Create(&server)
+	app.DB.Create(&server)
 
 	c.Redirect(302, "/servers?success=Server+created")
 }

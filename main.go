@@ -5,6 +5,8 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/models"
 	"github.com/romanzipp/wanderer/routes"
 	"github.com/rs/zerolog"
@@ -16,6 +18,11 @@ import (
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		panic("Error loading .env file")
+	}
+
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	if gin.IsDebugging() {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
@@ -28,12 +35,17 @@ func main() {
 		},
 	)
 
-	db := MakeDb()
-	router := MakeRouter(db)
+	app := &application.App{}
+	app.DB = MakeDb()
+	app.Router = MakeRouter(app.DB)
+	app.Env = application.Env{Password: os.Getenv("APP_PASSWORD")}
 
-	go MakeCheckScheduler(db)
+	routes.InitApiRoutes(app)
+	routes.InitWebRoutes(app)
 
-	log.Fatal().Err(router.Run())
+	go MakeCheckScheduler(app)
+
+	log.Fatal().Err(app.Router.Run())
 }
 
 func MakeDb() *gorm.DB {
@@ -67,19 +79,16 @@ func MakeRouter(db *gorm.DB) *gin.Engine {
 		AllowWildcard: true,
 	}))
 
-	routes.InitApiRoutes(router, db)
-	routes.InitWebRoutes(router, db)
-
 	return router
 }
 
-func MakeCheckScheduler(db *gorm.DB) {
+func MakeCheckScheduler(app *application.App) {
 	for {
 		var servers []models.Server
-		db.Find(&servers)
+		app.DB.Find(&servers)
 
 		for _, server := range servers {
-			status, err := server.Check(db)
+			status, err := server.Check(app.DB)
 			if err != nil {
 				log.Warn().Msgf("[server check] %s error: %s", server.Name, err)
 			} else {

@@ -2,92 +2,92 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/controllers/web"
-	"gorm.io/gorm"
 )
 
-func InitWebRoutes(router *gin.Engine, db *gorm.DB) {
+func InitWebRoutes(app *application.App) {
 	// --------------------------------------------
 	// authed routes
 
-	authed := router.Group("/")
+	authed := app.Router.Group("/")
 	authed.Use(WebTokenAuth())
 
 	authed.GET("/", func(c *gin.Context) {
-		web.IndexController(c, db)
+		web.IndexController(c, app.DB)
 	})
 
 	// servers
 
 	authed.GET("/servers", func(c *gin.Context) {
-		web.ListServersController(c, db)
+		web.ListServersController(c, app)
 	})
 
 	authed.GET("/servers/:id", func(c *gin.Context) {
-		web.ShowServerController(c, db, c.Param("id"))
+		web.ShowServerController(c, app, c.Param("id"))
 	})
 
 	authed.POST("/servers/:id", func(c *gin.Context) {
-		web.UpdateServerController(c, db, c.Param("id"))
+		web.UpdateServerController(c, app, c.Param("id"))
 	})
 
 	authed.GET("/servers/create", func(c *gin.Context) {
-		web.ShowCreateServerController(c, db)
+		web.ShowCreateServerController(c, app)
 	})
 
 	authed.POST("/servers", func(c *gin.Context) {
-		web.CreateServerController(c, db)
+		web.CreateServerController(c, app)
 	})
 
 	// templates
 
 	authed.GET("/templates", func(c *gin.Context) {
-		web.ListTemplatesController(c, db)
+		web.ListTemplatesController(c, app)
 	})
 
 	authed.GET("/templates/:templateID", func(c *gin.Context) {
-		web.ShowTemplateController(c, db, c.Param("templateID"))
+		web.ShowTemplateController(c, app, c.Param("templateID"))
 	})
 
 	authed.POST("/templates/:templateID", func(c *gin.Context) {
-		web.UpdateTemplateController(c, db, c.Param("templateID"))
+		web.UpdateTemplateController(c, app, c.Param("templateID"))
 	})
 
 	authed.POST("/templates/:templateID/versions", func(c *gin.Context) {
-		web.CreateVersionController(c, db, c.Param("templateID"))
+		web.CreateVersionController(c, app, c.Param("templateID"))
 	})
 
 	authed.POST("/versions/:versionID", func(c *gin.Context) {
-		web.DeleteVersionController(c, db, c.Param("versionID"))
+		web.DeleteVersionController(c, app, c.Param("versionID"))
 	})
 
 	authed.GET("/templates/create", func(c *gin.Context) {
-		web.ShowCreateTemplateController(c, db)
+		web.ShowCreateTemplateController(c, app)
 	})
 
 	authed.POST("/templates", func(c *gin.Context) {
-		web.CreateTemplateController(c, db)
+		web.CreateTemplateController(c, app)
 	})
 
 	// api
 
 	authed.GET("/tokens", func(c *gin.Context) {
-		web.ApiController(c, db)
+		web.ApiController(c, app)
 	})
 
 	authed.POST("/tokens", func(c *gin.Context) {
-		web.IssueApiTokenController(c, db)
+		web.IssueApiTokenController(c, app)
 	})
 
 	// --------------------------------------------
 	// login
 
-	router.GET("/auth", func(c *gin.Context) {
-		web.ShowAuthFormController(c, db)
+	app.Router.GET("/auth", func(c *gin.Context) {
+		web.ShowAuthFormController(c, app)
 	})
 
-	router.POST("/auth", func(c *gin.Context) {
-		web.SubmitAuthController(c, db)
+	app.Router.POST("/auth", func(c *gin.Context) {
+		web.SubmitAuthController(c, app)
 	})
 }
 

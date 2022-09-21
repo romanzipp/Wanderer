@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/controllers/api"
 	"github.com/romanzipp/wanderer/models"
 	"gorm.io/gorm"
@@ -12,16 +13,16 @@ type JsonError struct {
 	Message string
 }
 
-func InitApiRoutes(router *gin.Engine, db *gorm.DB) {
-	authed := router.Group("/api")
-	authed.Use(ApiTokenAuth(db))
+func InitApiRoutes(app *application.App) {
+	authed := app.Router.Group("/api")
+	authed.Use(ApiTokenAuth(app.DB))
 
 	authed.GET("/", func(c *gin.Context) {
-		api.IndexController(c, db)
+		api.IndexController(c, app)
 	})
 
 	authed.POST("/deploy", func(c *gin.Context) {
-		api.DeployController(c, db)
+		api.DeployController(c, app)
 	})
 }
 

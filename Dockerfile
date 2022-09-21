@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-## Build go app
+## Build go application
 FROM golang:1.19-buster AS build
 
 WORKDIR /app
