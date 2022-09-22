@@ -11,7 +11,7 @@
 - Simple Web UI for editing templates & monitoring deployments
 - Supports Nomad instances behind Cloudflare Access Zero Trust network
 
-Built with [Go](https://go.dev/), [Tailwind CSS](https://tailwindcss.com/) und [SQLite](https://sqlite.org/).
+Built with [Go](https://go.dev/), [Tailwind CSS](https://tailwindcss.com/) and [SQLite](https://sqlite.org/).
 
 ![](diagram.png)
 
@@ -29,6 +29,7 @@ docker build -t wanderer:latest .
 docker run \
   -v "$(pwd)/data.db:/data.db" \
   -v "$(pwd)/.env:/.env" \
+  -p 8080:8080 \
   wanderer:latest
 ```
 
