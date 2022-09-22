@@ -54,10 +54,18 @@ func MakeDb() *gorm.DB {
 		panic("failed to connect database")
 	}
 
-	db.AutoMigrate(&models.Server{})
-	db.AutoMigrate(&models.Template{})
-	db.AutoMigrate(&models.TemplateVersion{})
-	db.AutoMigrate(&models.Token{})
+	if err := db.AutoMigrate(&models.Server{}); err != nil {
+		panic(err)
+	}
+	if err := db.AutoMigrate(&models.Template{}); err != nil {
+		panic(err)
+	}
+	if err := db.AutoMigrate(&models.TemplateVersion{}); err != nil {
+		panic(err)
+	}
+	if err := db.AutoMigrate(&models.Token{}); err != nil {
+		panic(err)
+	}
 
 	return db
 }
