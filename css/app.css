@@ -101,11 +101,11 @@
         @apply bg-gray-100 px-2 py-2 text-xs text-gray-500 font-medium uppercase tracking-wide
     }
 
-    table thead tr th:first-child {
+    table thead tr:first-child th:first-child {
         @apply rounded-tl-md
     }
 
-    table thead tr th:last-child {
+    table thead tr:first-child th:last-child {
         @apply rounded-tr-md
     }
 
@@ -117,11 +117,11 @@
         @apply py-2 px-2 bg-gray-50
     }
 
-    table tbody tr td:first-child {
+    table tbody tr:last-child td:first-child {
         @apply rounded-bl-md
     }
 
-    table tbody tr td:last-child {
+    table tbody tr:last-child td:last-child {
         @apply rounded-br-md
     }
 
