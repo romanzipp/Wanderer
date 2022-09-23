@@ -36,7 +36,7 @@ docker build -t wanderer:latest .
 
 ```shell
 docker run \
-  -v "$(pwd)/data.db:/data.db" \
+  -v "$(pwd)/data/:/data/" \
   -v "$(pwd)/.env:/.env" \
   -p 8080:8080 \
   wanderer:latest
