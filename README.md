@@ -10,6 +10,7 @@
 - Offers API for CD tools to automate deployment of new versions
 - Simple Web UI for editing templates & monitoring deployments
 - Supports Nomad instances behind Cloudflare Access Zero Trust network
+- [**GitHub Actions Workflow**](https://github.com/romanzipp/Wanderer-Action) available for easy pipeline integration
 
 Built with [Go](https://go.dev/), [Tailwind CSS](https://tailwindcss.com/) and [SQLite](https://sqlite.org/).
 
