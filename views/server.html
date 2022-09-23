@@ -3,7 +3,7 @@
 <div class="w-[24rem] mx-auto space-y-6">
     <div class="card">
         <h1 class="mb-6 text-2xl">
-            Update server
+            Update cluster
         </h1>
 
         <form action="/servers/{{.server.ID}}" method="post" enctype="multipart/form-data" class="space-y-4">
@@ -13,7 +13,7 @@
                 <input id="name"
                        name="name"
                        type="text"
-                       placeholder="My Nomad instance"
+                       placeholder="My Nomad cluster"
                        value="{{.server.Name}}"
                        required>
             </div>
@@ -47,7 +47,7 @@
             </div>
 
             <button type="submit" class="button button-primary">
-                Update server
+                Update cluster
             </button>
 
         </form>
@@ -56,7 +56,7 @@
     <div class="flex justify-end">
         <form action="/servers/{{.server.ID}}/delete" method="post">
             <button type="submit" class="button button-danger">
-                Delete server
+                Delete cluster
             </button>
         </form>
     </div>
