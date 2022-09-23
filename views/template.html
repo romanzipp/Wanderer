@@ -114,6 +114,16 @@
                 </div>
 
                 <div>
+                    <label for="nomad_job_id" class="required">Nomad Job ID</label>
+                    <input id="nomad_job_id"
+                           name="job"
+                           type="text"
+                           placeholder="web-job"
+                           value="{{.template.NomadJobID}}"
+                           required>
+                </div>
+
+                <div>
                     <label for="content" class="required">Template</label>
                     <textarea id="content"
                               name="content"
