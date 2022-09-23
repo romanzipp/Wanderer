@@ -15,6 +15,7 @@
                     <th>Name</th>
                     <th>Created</th>
                     <th>Last used</th>
+                    <th>Del</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -28,6 +29,13 @@
                         {{else}}
                         <span class="text-gray-300">never</span>
                         {{end}}
+                    </td>
+                    <td>
+                        <form action="/tokens/{{.ID}}/delete" method="post">
+                            <button type="submit" class="text-red-500 font-bold">
+                                X
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 {{end}}

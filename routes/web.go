@@ -79,6 +79,10 @@ func InitWebRoutes(app *application.App) {
 		web.IssueApiTokenController(c, app)
 	})
 
+	authed.POST("/tokens/:tokenID/delete", func(c *gin.Context) {
+		web.DeleteApiTokenController(c, app, c.Param("tokenID"))
+	})
+
 	// --------------------------------------------
 	// login
 

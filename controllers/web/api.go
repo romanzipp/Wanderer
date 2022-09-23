@@ -19,6 +19,7 @@ func ApiController(c *gin.Context, app *application.App) {
 		"nav":          "api",
 		"createdToken": token,
 		"tokens":       tokens,
+		"success":      c.Query("success"),
 	})
 }
 
@@ -30,4 +31,18 @@ func IssueApiTokenController(c *gin.Context, app *application.App) {
 	})
 
 	c.Redirect(302, fmt.Sprintf("/tokens?token=%s&success=Token+issued", token))
+}
+
+func DeleteApiTokenController(c *gin.Context, app *application.App, tokenID string) {
+	var token models.Token
+	app.DB.Where("id = ?", tokenID).First(&token)
+
+	if token.ID == 0 {
+		c.Redirect(302, "/tokens?error=Token+not+found")
+		return
+	}
+
+	app.DB.Delete(&token)
+
+	c.Redirect(302, "/tokens?success=Token+deleted")
 }
