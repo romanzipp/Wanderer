@@ -18,6 +18,8 @@ func ListTemplatesController(c *gin.Context, app *application.App) {
 		"title":     "Templates",
 		"nav":       "templates",
 		"templates": templates,
+		"error":     c.Query("error"),
+		"success":   c.Query("success"),
 	})
 }
 
@@ -54,6 +56,20 @@ func UpdateTemplateController(c *gin.Context, app *application.App, templateID s
 	app.DB.Save(template)
 
 	c.Redirect(302, fmt.Sprintf("/templates/%s?success=Template+updated", templateID))
+}
+
+func DeleteTemplateController(c *gin.Context, app *application.App, templateID string) {
+	var template models.Template
+	app.DB.Where("id = ?", templateID).First(&template)
+
+	if template.ID == 0 {
+		c.Redirect(302, "/templates?error=Template+not+found")
+		return
+	}
+
+	app.DB.Delete(&template)
+
+	c.Redirect(302, "/templates?success=Template+deleted")
 }
 
 func ShowCreateTemplateController(c *gin.Context, app *application.App) {

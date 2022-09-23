@@ -160,6 +160,14 @@ jobs:
           version: "" # TODO
 </textarea>
         </div>
+
+        <div class="flex justify-end">
+            <form action="/templates/{{.template.ID}}/delete" method="post">
+                <button type="submit" class="button button-danger">
+                    Delete template
+                </button>
+            </form>
+        </div>
     </div>
 
 </div>
