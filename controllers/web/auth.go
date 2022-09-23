@@ -1,6 +1,8 @@
 package web
 
 import (
+	"crypto/sha256"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/romanzipp/wanderer/application"
 	"github.com/rs/zerolog/log"
@@ -23,6 +25,9 @@ func SubmitAuthController(c *gin.Context, app *application.App) {
 		return
 	}
 
-	c.SetCookie("token", "ok", 3000, "/", "", false, true)
+	token := sha256.Sum256([]byte(password))
+	lifetime := app.Env.SessionLifetime
+
+	c.SetCookie("token", fmt.Sprintf("%x", token[:]), lifetime*60, "/", "", false, true)
 	c.Redirect(302, "/")
 }

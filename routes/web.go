@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"crypto/sha256"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/controllers/web"
@@ -11,7 +13,7 @@ func InitWebRoutes(app *application.App) {
 	// authed routes
 
 	authed := app.Router.Group("/")
-	authed.Use(WebTokenAuth())
+	authed.Use(WebTokenAuth(app))
 
 	authed.GET("/", func(c *gin.Context) {
 		web.IndexController(c, app.DB)
@@ -103,7 +105,7 @@ func InitWebRoutes(app *application.App) {
 	})
 }
 
-func WebTokenAuth() gin.HandlerFunc {
+func WebTokenAuth(app *application.App) gin.HandlerFunc {
 	abort := func(c *gin.Context) {
 		c.Redirect(302, "/auth")
 	}
@@ -115,5 +117,15 @@ func WebTokenAuth() gin.HandlerFunc {
 			abort(c)
 			return
 		}
+
+		needle := sha256.Sum256([]byte(app.Env.Password))
+		hash := fmt.Sprintf("%x", needle[:])
+
+		if token.Value != hash {
+			abort(c)
+			return
+		}
+
+		c.Next()
 	}
 }

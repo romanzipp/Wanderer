@@ -14,6 +14,7 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -38,7 +39,7 @@ func main() {
 	app := &application.App{}
 	app.DB = MakeDb()
 	app.Router = MakeRouter(app.DB)
-	app.Env = application.Env{Password: os.Getenv("APP_PASSWORD")}
+	app.Env = makeEnv()
 
 	routes.InitApiRoutes(app)
 	routes.InitWebRoutes(app)
@@ -46,6 +47,15 @@ func main() {
 	go MakeCheckScheduler(app)
 
 	log.Fatal().Err(app.Router.Run())
+}
+
+func makeEnv() application.Env {
+	lifetime, _ := strconv.ParseInt(os.Getenv("SESSION_LIFETIME"), 10, 64)
+
+	return application.Env{
+		Password:        os.Getenv("APP_PASSWORD"),
+		SessionLifetime: int(lifetime),
+	}
 }
 
 func MakeDb() *gorm.DB {

@@ -12,5 +12,6 @@ type App struct {
 }
 
 type Env struct {
-	Password string
+	Password        string
+	SessionLifetime int
 }
