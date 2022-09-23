@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/controllers/api"
@@ -10,7 +11,7 @@ import (
 )
 
 type JsonError struct {
-	Message string
+	Message string `json:"message"`
 }
 
 func InitApiRoutes(app *application.App) {
@@ -39,7 +40,7 @@ func ApiTokenAuth(db *gorm.DB) gin.HandlerFunc {
 		db.Where("token = ?", tokenStr).Find(&token)
 
 		if token.ID == 0 {
-			c.AbortWithStatusJSON(401, JsonError{"Invalid token"})
+			c.AbortWithStatusJSON(401, JsonError{fmt.Sprintf("Invalid token: %s", tokenStr)})
 			return
 		}
 
