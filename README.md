@@ -18,6 +18,14 @@ Built with [Go](https://go.dev/), [Tailwind CSS](https://tailwindcss.com/) and [
 
 ## Docker
 
+```
+docker pull ghcr.io/romanzipp/wanderer:latest
+```
+
+See [repository](https://github.com/romanzipp/Wanderer/pkgs/container/wanderer) for more information.
+
+### Local
+
 #### Build
 
 ```shell
