@@ -16,7 +16,7 @@
                     <th>Selector</th>
                     <th>Latest Version</th>
                     <th>Last deploy at</th>
-                    <th></th>
+                    <th>Del</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,8 +40,8 @@
                     <td>
                         <form method="post" action="/versions/{{.ID}}">
                             <input type="hidden" name="template" value="">
-                            <button type="submit">
-                                Delete
+                            <button type="submit" class="text-red-500 font-bold">
+                                X
                             </button>
                         </form>
                     </td>
