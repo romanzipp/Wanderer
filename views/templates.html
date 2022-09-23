@@ -29,7 +29,7 @@
     <div class="flex justify-between space-x-6 p-6 text-sm leading-normal">
         <div>
             <div class="text-gray-500">Server</div>
-            <a href="/servers/{{.ServerID}}" class="link">{{.Server.Name}}</a>
+            <a href="/servers/{{.ServerID}}" class="link">{{.Server.Name}}</a> (ID: {{.ServerID}})
         </div>
         <div>
             <div class="text-gray-500">Nomad Job</div>
@@ -59,11 +59,11 @@
         Versions
     </div>
 
-    <div class="flex justify-between space-x-6 p-6 text-sm leading-normal">
+    <div class="flex justify-start space-x-6 p-6 text-sm leading-normal">
         {{range .Versions}}
         <div>
             <div class="text-gray-500">{{.Selector}}</div>
-            <div>{{.ID}}</div>
+            <div>{{.LastVersion}}</div>
         </div>
         {{end}}
     </div>
