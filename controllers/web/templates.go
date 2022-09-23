@@ -30,11 +30,18 @@ func ShowTemplateController(c *gin.Context, app *application.App, templateID str
 		return
 	}
 
+	scheme := "http"
+	if c.Request.TLS != nil {
+		scheme = "https"
+	}
+	endpoint := fmt.Sprintf("%s://%s", scheme, c.Request.Host)
+
 	c.HTML(http.StatusOK, "template", gin.H{
 		"title":    "Template",
 		"nav":      "templates",
 		"template": template,
 		"success":  c.Query("success"),
+		"endpoint": endpoint,
 	})
 }
 

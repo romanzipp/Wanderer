@@ -92,7 +92,7 @@
 
     </div>
 
-    <div class="w-2/5">
+    <div class="w-2/5 space-y-6">
         <div class="card">
 
             <h1 class="mb-6 text-2xl">
@@ -138,6 +138,27 @@
 
             </form>
 
+        </div>
+
+        <div class="card">
+            <h1 class="mb-6 text-2xl">
+                GitHub Actions Workflow
+            </h1>
+
+            <textarea rows="10" class="font-mono" readonly>name: Foo
+jobs:
+  deploy:
+    steps:
+      - name: "Publish to Wanderer"
+        uses: romanzipp/Wanderer-Action@v1
+        with:
+          token: $&#123;&#123; secrets.WANDERER_TOKEN &#125;&#125;
+          endpoint: {{.endpoint}}
+          server: {{.template.ServerID}}
+          job: "{{.template.NomadJobID}}"
+          selector: "" # TODO
+          version: "" # TODO
+</textarea>
         </div>
     </div>
 
