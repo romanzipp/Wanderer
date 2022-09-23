@@ -31,6 +31,10 @@ func InitWebRoutes(app *application.App) {
 		web.UpdateServerController(c, app, c.Param("id"))
 	})
 
+	authed.POST("/servers/:id/delete", func(c *gin.Context) {
+		web.DeleteServerController(c, app, c.Param("id"))
+	})
+
 	authed.GET("/servers/create", func(c *gin.Context) {
 		web.ShowCreateServerController(c, app)
 	})

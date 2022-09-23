@@ -47,6 +47,20 @@ func UpdateServerController(c *gin.Context, app *application.App, serverID strin
 	c.Redirect(302, fmt.Sprintf("/servers/%s?success=Server+updated", serverID))
 }
 
+func DeleteServerController(c *gin.Context, app *application.App, serverID string) {
+	var server models.Server
+	app.DB.Where("id = ?", serverID).First(&server)
+
+	if server.ID == 0 {
+		c.Redirect(302, "/servers?error=Server+not+found")
+		return
+	}
+
+	app.DB.Delete(&server)
+
+	c.Redirect(302, "/servers?success=Server+deleted")
+}
+
 func ShowCreateServerController(c *gin.Context, app *application.App) {
 	c.HTML(http.StatusOK, "servers-create", gin.H{
 		"title": "Create server",

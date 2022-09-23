@@ -1,56 +1,65 @@
 {{define "content"}}
 
-<div class="w-[24rem] mx-auto card">
-
-    <h1 class="mb-6 text-2xl">
-        Update server
-    </h1>
-
-    <form action="/servers/{{.server.ID}}" method="post" enctype="multipart/form-data" class="space-y-4">
-
-        <div>
-            <label for="name" class="required">Name</label>
-            <input id="name"
-                   name="name"
-                   type="text"
-                   placeholder="My Nomad instance"
-                   value="{{.server.Name}}"
-                   required>
-        </div>
-
-        <div>
-            <label for="address" class="required">Address</label>
-            <input id="address"
-                   name="address"
-                   type="text"
-                   placeholder="https://10.0.0.1:8080"
-                   value="{{.server.Address}}"
-                   required>
-        </div>
-
-        <div>
-            <label for="cf_access_client_id">Cloudflare Access Id</label>
-            <input id="cf_access_client_id"
-                   name="cf_access_client_id"
-                   type="text"
-                   value="{{.server.CfAccessClientId}}"
-                   placeholder="*******.access">
-        </div>
-
-        <div>
-            <label for="cf_access_client_secret">Cloudflare Access Secret</label>
-            <input id="cf_access_client_secret"
-                   name="cf_access_client_secret"
-                   type="text"
-                   value="{{.server.CfAccessClientSecret}}"
-                   placeholder="*******">
-        </div>
-
-        <button type="submit" class="button button-primary">
+<div class="w-[24rem] mx-auto space-y-6">
+    <div class="card">
+        <h1 class="mb-6 text-2xl">
             Update server
-        </button>
+        </h1>
 
-    </form>
+        <form action="/servers/{{.server.ID}}" method="post" enctype="multipart/form-data" class="space-y-4">
+
+            <div>
+                <label for="name" class="required">Name</label>
+                <input id="name"
+                       name="name"
+                       type="text"
+                       placeholder="My Nomad instance"
+                       value="{{.server.Name}}"
+                       required>
+            </div>
+
+            <div>
+                <label for="address" class="required">Address</label>
+                <input id="address"
+                       name="address"
+                       type="text"
+                       placeholder="https://10.0.0.1:8080"
+                       value="{{.server.Address}}"
+                       required>
+            </div>
+
+            <div>
+                <label for="cf_access_client_id">Cloudflare Access Id</label>
+                <input id="cf_access_client_id"
+                       name="cf_access_client_id"
+                       type="text"
+                       value="{{.server.CfAccessClientId}}"
+                       placeholder="*******.access">
+            </div>
+
+            <div>
+                <label for="cf_access_client_secret">Cloudflare Access Secret</label>
+                <input id="cf_access_client_secret"
+                       name="cf_access_client_secret"
+                       type="text"
+                       value="{{.server.CfAccessClientSecret}}"
+                       placeholder="*******">
+            </div>
+
+            <button type="submit" class="button button-primary">
+                Update server
+            </button>
+
+        </form>
+    </div>
+
+    <div class="flex justify-end">
+        <form action="/tokens/{{.ID}}/delete" method="post">
+            <button type="submit" class="button button-danger">
+                Delete server
+            </button>
+        </form>
+    </div>
 
 </div>
 
