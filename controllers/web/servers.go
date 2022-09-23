@@ -17,6 +17,8 @@ func ListServersController(c *gin.Context, app *application.App) {
 		"title":   "Server",
 		"nav":     "servers",
 		"servers": servers,
+		"success": c.Query("success"),
+		"error":   c.Query("error"),
 	})
 }
 
