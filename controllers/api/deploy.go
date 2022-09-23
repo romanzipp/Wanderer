@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/models"
@@ -45,7 +46,7 @@ func DeployController(c *gin.Context, app *application.App) {
 	// find template
 	app.DB.Where("nomad_job_id = ?", payload.Job).Preload("Server").Find(&template)
 	if template.ID == 0 {
-		c.JSON(422, &ErrorResponse{"invalid job id"})
+		c.JSON(422, &ErrorResponse{fmt.Sprintf("invalid job id: %s", payload.Job)})
 		return
 	}
 
