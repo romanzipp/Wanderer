@@ -9,7 +9,7 @@ import (
 )
 
 type DeployPayload struct {
-	Server   int    `json:"server" binding:"required"`
+	Server   int    `json:"server"`
 	Job      string `json:"job" binding:"required"`      // nomad job id
 	Selector string `json:"selector" binding:"required"` // version selector
 	Version  string `json:"version" binding:"required"`  // version
@@ -37,7 +37,18 @@ func DeployController(c *gin.Context, app *application.App) {
 	var templateVersion models.TemplateVersion
 
 	// find server
-	app.DB.First(&server, payload.Server)
+	if payload.Server == 0 {
+		var count int64
+		app.DB.Model(models.Server{}).Count(&count)
+		if count != 1 {
+			c.JSON(422, &ErrorResponse{"server parameter required since there is more than 1 server"})
+			return
+		}
+		app.DB.First(&server)
+	} else {
+		app.DB.First(&server, payload.Server)
+	}
+
 	if server.ID == 0 {
 		c.JSON(422, &ErrorResponse{"invalid server id"})
 		return
