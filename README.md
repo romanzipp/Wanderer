@@ -2,8 +2,6 @@
   <img src="wordmark.png" />
 </p>
 
-⚠️ This project is a work in progress ⚠️ See [**Development Project**](https://github.com/users/romanzipp/projects/2/views/1) for more details.
-
 ## Features
 
 - Provides a centralized repository for Nomad HCL templates
@@ -11,6 +9,8 @@
 - Simple Web UI for editing templates & monitoring deployments
 - Supports Nomad instances behind Cloudflare Access Zero Trust network
 - [**GitHub Actions Workflow**](https://github.com/romanzipp/Wanderer-Action) available for easy pipeline integration
+
+See [**Development Project**](https://github.com/users/romanzipp/projects/2/views/1) for more details.
 
 ![](diagram.png)
 
