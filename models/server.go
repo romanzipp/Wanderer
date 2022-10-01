@@ -1,6 +1,8 @@
 package models
 
 import (
+	"encoding/base64"
+	"fmt"
 	"github.com/hashicorp/nomad/api"
 	"gorm.io/gorm"
 	"log"
@@ -33,6 +35,8 @@ type Server struct {
 	Address              string
 	CfAccessClientId     string
 	CfAccessClientSecret string
+	BasicAuthUser        string
+	BasicAuthPassword    string
 	LastStatusCheck      time.Time
 	Status               ServerStatus
 }
@@ -42,6 +46,10 @@ func (s Server) NewNomadClient() (*api.Client, error) {
 	if s.CfAccessClientId != "" {
 		headers["CF-Access-Client-Id"] = []string{s.CfAccessClientId}
 		headers["CF-Access-Client-Secret"] = []string{s.CfAccessClientSecret}
+	}
+
+	if s.BasicAuthUser != "" && s.BasicAuthPassword != "" {
+		headers["Authorization"] = []string{fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", s.BasicAuthUser, s.BasicAuthPassword))))}
 	}
 
 	client, err := api.NewClient(&api.Config{
