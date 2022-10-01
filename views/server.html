@@ -41,8 +41,26 @@
                 <label for="cf_access_client_secret">Cloudflare Access Secret</label>
                 <input id="cf_access_client_secret"
                        name="cf_access_client_secret"
-                       type="text"
+                       type="password"
                        value="{{.server.CfAccessClientSecret}}"
+                       placeholder="*******">
+            </div>
+
+            <div>
+                <label for="basic_auth_user">Basic Auth User</label>
+                <input id="basic_auth_user"
+                       name="basic_auth_user"
+                       type="text"
+                       value="{{.server.BasicAuthUser}}"
+                       placeholder="user">
+            </div>
+
+            <div>
+                <label for="basic_auth_password">Basic Auth Password</label>
+                <input id="basic_auth_password"
+                       name="basic_auth_password"
+                       type="password"
+                       value="{{.server.BasicAuthPassword}}"
                        placeholder="*******">
             </div>
 

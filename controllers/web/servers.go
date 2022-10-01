@@ -83,5 +83,7 @@ func fillServer(c *gin.Context) models.Server {
 		Address:              c.PostForm("address"),
 		CfAccessClientId:     c.PostForm("cf_access_client_id"),
 		CfAccessClientSecret: c.PostForm("cf_access_client_secret"),
+		BasicAuthUser:        c.PostForm("basic_auth_user"),
+		BasicAuthPassword:    c.PostForm("basic_auth_password"),
 	}
 }
