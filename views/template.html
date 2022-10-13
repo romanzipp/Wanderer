@@ -49,6 +49,14 @@
                 {{end}}
                 </tbody>
             </table>
+
+            <div class="mt-4">
+                <form action="/templates/{{.template.ID}}/redeploy" method="post">
+                    <button type="submit" class="button button-primary">
+                        Re-deploy all
+                    </button>
+                </form>
+            </div>
         </div>
         {{end}}
 

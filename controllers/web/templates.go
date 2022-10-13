@@ -43,6 +43,7 @@ func ShowTemplateController(c *gin.Context, app *application.App, templateID str
 		"nav":      "templates",
 		"template": template,
 		"success":  c.Query("success"),
+		"error":    c.Query("error"),
 		"endpoint": endpoint,
 	})
 }
@@ -112,6 +113,23 @@ func CreateTemplateController(c *gin.Context, app *application.App) {
 	app.DB.Create(&template)
 
 	c.Redirect(302, "/templates?success=Template+created")
+}
+
+func RedeployController(c *gin.Context, app *application.App, templateID string) {
+	var template models.Template
+	app.DB.Preload("Server").First(&template, templateID)
+	if template.ID == 0 {
+		c.Redirect(302, fmt.Sprintf("/templates/%s?error=Invalid+template", templateID))
+		return
+	}
+
+	err := template.DeployCurrent(app.DB)
+	if err != nil {
+		c.Redirect(302, fmt.Sprintf("/templates/%s?error=Error+deploying+-+%s", templateID, err))
+		return
+	}
+
+	c.Redirect(302, fmt.Sprintf("/templates/%s?success=Successfully+redeployed", templateID))
 }
 
 func fillTemplate(c *gin.Context, serverID uint) models.Template {

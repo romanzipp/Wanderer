@@ -67,6 +67,10 @@ func InitWebRoutes(app *application.App) {
 		web.CreateVersionController(c, app, c.Param("templateID"))
 	})
 
+	authed.POST("/templates/:templateID/redeploy", func(c *gin.Context) {
+		web.RedeployController(c, app, c.Param("templateID"))
+	})
+
 	authed.POST("/versions/:versionID", func(c *gin.Context) {
 		web.DeleteVersionController(c, app, c.Param("versionID"))
 	})

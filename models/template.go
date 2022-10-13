@@ -24,7 +24,7 @@ func (t Template) GetNomadJobUrl() string {
 	return fmt.Sprintf("%s/ui/jobs//%s", t.Server.Address, t.NomadJobID)
 }
 
-func (t Template) getPopulatedContent(db *gorm.DB, newVersion TemplateVersion) string {
+func (t Template) getPopulatedContentForVersion(db *gorm.DB, newVersion TemplateVersion) string {
 	// get all previous versions from database
 	var versions []TemplateVersion
 	db.Where("id != ?", newVersion.ID).Where("template_id = ?", t.ID).Find(&versions)
@@ -48,12 +48,68 @@ func (t Template) Deploy(db *gorm.DB, templateVersion *TemplateVersion, versionS
 		return errors.New("missing server")
 	}
 
+	// get new template content with new versions
+	payload := t.getPopulatedContentForVersion(db, *templateVersion)
+
+	err := t.deployPayload(db, payload)
+	if err != nil {
+		return err
+	}
+
+	templateVersion.LastDeployedAt = time.Now()
+
+	db.Save(templateVersion)
+
+	return nil
+}
+
+// --------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
+
+func (t Template) getPopulatedContent(db *gorm.DB) string {
+	// get all versions from database
+	var versions []TemplateVersion
+	db.Where("template_id = ?", t.ID).Find(&versions)
+
+	content := t.Content
+
+	// replace selectors with version strings
+	for _, version := range versions {
+		content = strings.Replace(content, fmt.Sprintf("{{ %s }}", version.Selector), version.LastVersion, -1)
+		log.Debug().Msgf("version replacement: %s -> %s", version.Selector, version.LastVersion)
+	}
+
+	return content
+}
+
+func (t Template) DeployCurrent(db *gorm.DB) error {
+	if t.Server.ID == 0 {
+		return errors.New("missing server")
+	}
+
+	// get new template content with new versions
+	payload := t.getPopulatedContent(db)
+
+	err := t.deployPayload(db, payload)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// --------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
+
+func (t Template) deployPayload(db *gorm.DB, payload string) error {
+	if t.Server.ID == 0 {
+		return errors.New("missing server")
+	}
+
 	client, err := t.Server.NewNomadClient()
 	if err != nil {
 		return err
 	}
-	// get new template content with new versions
-	payload := t.getPopulatedContent(db, *templateVersion)
 
 	// parse job spec
 	job, err := client.Jobs().ParseHCL(payload, false)
@@ -79,10 +135,6 @@ func (t Template) Deploy(db *gorm.DB, templateVersion *TemplateVersion, versionS
 	}
 
 	log.Debug().Msgf("dispatched job '%s' mit modify index %s", *job.ID, res.JobModifyIndex)
-
-	templateVersion.LastDeployedAt = time.Now()
-
-	db.Save(templateVersion)
 
 	return nil
 }
