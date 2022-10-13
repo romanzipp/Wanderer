@@ -6,14 +6,15 @@ import (
 	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/models"
 	"strconv"
+	"strings"
 )
 
 func CreateVersionController(c *gin.Context, app *application.App, templateID string) {
 	templateIDConv, _ := strconv.ParseInt(templateID, 10, 64)
 
 	app.DB.Create(&models.TemplateVersion{
-		Selector:    c.PostForm("selector"),
-		LastVersion: c.PostForm("version"),
+		Selector:    strings.Trim(c.PostForm("selector"), " "),
+		LastVersion: strings.Trim(c.PostForm("version"), " "),
 		TemplateID:  int(templateIDConv),
 	})
 
