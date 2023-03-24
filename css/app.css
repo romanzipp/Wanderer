@@ -136,4 +136,34 @@
     table tbody tr:not(:last-child) td {
         @apply border-b border-gray-100
     }
+
+    @media (prefers-color-scheme: dark) {
+        .card {
+            @apply bg-gray-800;
+        }
+
+        input[type="text"], input[type="password"], select, textarea {
+            @apply bg-gray-700 border-gray-700
+        }
+
+        .button.button-primary {
+            @apply shadow-pink-500/40
+        }
+
+        .button.button-danger {
+            @apply shadow-red-500/40
+        }
+
+        table thead tr th {
+            @apply bg-gray-700/60 text-gray-400
+        }
+
+        table tbody tr td {
+            @apply bg-gray-700
+        }
+
+        table tbody tr:not(:last-child) td {
+            @apply border-gray-600
+        }
+    }
 }

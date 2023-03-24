@@ -13,10 +13,10 @@
 
     <div class="flex justify-between p-6">
         <div>
-            <div class="text-lg text-gray-800">
+            <div class="text-lg text-gray-800 dark:text-white">
                 {{.Name}}
             </div>
-            <div class="text-gray-500 text-sm">
+            <div class="text-gray-500 dark:text-gray-400 text-sm">
                 {{.Address}}
             </div>
         </div>
@@ -25,32 +25,32 @@
         </div>
     </div>
 
-    <div class="h-px w-full bg-gray-200"></div>
+    <div class="h-px w-full bg-gray-200 dark:bg-gray-700"></div>
 
     <div class="flex justify-between space-x-6 p-6 text-sm leading-normal">
         <div>
-            <div class="text-gray-500">ID</div>
+            <div class="text-gray-500 dark:text-gray-400">ID</div>
             <div>{{.ID}}</div>
         </div>
         <div>
-            <div class="text-gray-500">Status</div>
+            <div class="text-gray-500 dark:text-gray-400">Status</div>
             <div>{{.Status.GetTitle}} ({{.LastStatusCheck.Format "15:04"}})</div>
         </div>
         <div>
-            <div class="text-gray-500">Created</div>
+            <div class="text-gray-500 dark:text-gray-400">Created</div>
             <div>{{.CreatedAt.Format "2006-01-02"}}</div>
         </div>
         <div>
-            <div class="text-gray-500">Updated</div>
+            <div class="text-gray-500 dark:text-gray-400">Updated</div>
             <div>{{.UpdatedAt.Format "2006-01-02"}}</div>
         </div>
         <div>
-            <div class="text-gray-500">Cloudflare</div>
+            <div class="text-gray-500 dark:text-gray-400">Cloudflare</div>
             <div>{{if .CfAccessClientId}}yes{{else}}no{{end}}</div>
         </div>
     </div>
 
-    <a href="/servers/{{.ID}}" class="block bg-gray-100 hover:bg-gray-200 transition-colors duration-150 px-6 py-3 text-center font-medium text-gray-400 hover:text-gray-500">
+    <a href="/servers/{{.ID}}" class="block bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors duration-150 px-6 py-3 text-center font-medium text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
         Show Nomad cluster
     </a>
 </div>
