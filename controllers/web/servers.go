@@ -14,11 +14,12 @@ func ListServersController(c *gin.Context, app *application.App) {
 	app.DB.Find(&servers)
 
 	c.HTML(http.StatusOK, "servers", gin.H{
-		"title":   "Server",
-		"nav":     "servers",
-		"servers": servers,
-		"success": c.Query("success"),
-		"error":   c.Query("error"),
+		"title":      "Server",
+		"nav":        "servers",
+		"servers":    servers,
+		"success":    c.Query("success"),
+		"error":      c.Query("error"),
+		"currentUrl": c.Request.URL.Path,
 	})
 }
 
@@ -32,10 +33,11 @@ func ShowServerController(c *gin.Context, app *application.App, serverID string)
 	}
 
 	c.HTML(http.StatusOK, "server", gin.H{
-		"title":   "Server",
-		"nav":     "servers",
-		"server":  server,
-		"success": c.Query("success"),
+		"title":      "Server",
+		"nav":        "servers",
+		"server":     server,
+		"success":    c.Query("success"),
+		"currentUrl": c.Request.URL.Path,
 	})
 }
 
@@ -65,8 +67,9 @@ func DeleteServerController(c *gin.Context, app *application.App, serverID strin
 
 func ShowCreateServerController(c *gin.Context, app *application.App) {
 	c.HTML(http.StatusOK, "servers-create", gin.H{
-		"title": "Create server",
-		"nav":   "servers",
+		"title":      "Create server",
+		"nav":        "servers",
+		"currentUrl": c.Request.URL.Path,
 	})
 }
 

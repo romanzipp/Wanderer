@@ -11,9 +11,10 @@ import (
 
 func ShowAuthFormController(c *gin.Context, app *application.App) {
 	c.HTML(http.StatusOK, "auth", gin.H{
-		"title": "Authenticate",
-		"nav":   "index",
-		"error": c.Query("error"),
+		"title":      "Authenticate",
+		"nav":        "index",
+		"error":      c.Query("error"),
+		"currentUrl": c.Request.URL.Path,
 	})
 }
 

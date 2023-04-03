@@ -45,12 +45,14 @@
                     {{if .success}}
                     <div class="alert alert-success mb-6">
                         {{.success}}
+                        <a href="{{.currentUrl}}" class="close">X</a>
                     </div>
                     {{end}}
 
                     {{if .error}}
                     <div class="alert alert-error mb-6">
                         {{.error}}
+                        <a href="{{.currentUrl}}" class="close">X</a>
                     </div>
                     {{end}}
                 </div>

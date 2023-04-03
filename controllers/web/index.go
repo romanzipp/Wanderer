@@ -32,12 +32,13 @@ func IndexController(c *gin.Context, db *gorm.DB) {
 	}
 
 	c.HTML(http.StatusOK, "index", gin.H{
-		"title":     "Home",
-		"nav":       "index",
-		"servers":   servers,
-		"templates": templates,
-		"server":    selectedServer,
-		"template":  selectedTemplate,
-		"versions":  versions,
+		"title":      "Home",
+		"nav":        "index",
+		"servers":    servers,
+		"templates":  templates,
+		"server":     selectedServer,
+		"template":   selectedTemplate,
+		"versions":   versions,
+		"currentUrl": c.Request.URL.Path,
 	})
 }

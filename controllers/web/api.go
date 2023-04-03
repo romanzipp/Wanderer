@@ -20,6 +20,7 @@ func ApiController(c *gin.Context, app *application.App) {
 		"createdToken": token,
 		"tokens":       tokens,
 		"success":      c.Query("success"),
+		"currentUrl":   c.Request.URL.Path,
 	})
 }
 

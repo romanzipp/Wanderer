@@ -58,11 +58,24 @@
     }
 
     .alert {
-        @apply p-3 text-sm font-medium rounded-md leading-normal border-2
+        @apply relative p-3 text-sm font-medium rounded-md leading-normal border-2
     }
 
     .alert::before {
-        @apply block mb-1 text-xs font-semibold opacity-70 tracking-wider
+        @apply block mb-1
+    }
+
+    .alert .close {
+        @apply absolute right-0 top-0 mt-3 px-3 font-mono
+    }
+
+    .alert .close:hover {
+        @apply opacity-90
+    }
+
+    .alert::before,
+    .alert .close {
+        @apply text-xs font-semibold opacity-70 tracking-wider uppercase
     }
 
     .alert.alert-success {

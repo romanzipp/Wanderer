@@ -15,11 +15,12 @@ func ListTemplatesController(c *gin.Context, app *application.App) {
 	app.DB.Model(&models.Template{}).Preload("Server").Preload("Versions").Find(&templates)
 
 	c.HTML(http.StatusOK, "templates", gin.H{
-		"title":     "Templates",
-		"nav":       "templates",
-		"templates": templates,
-		"error":     c.Query("error"),
-		"success":   c.Query("success"),
+		"title":      "Templates",
+		"nav":        "templates",
+		"templates":  templates,
+		"error":      c.Query("error"),
+		"success":    c.Query("success"),
+		"currentUrl": c.Request.URL.Path,
 	})
 }
 
@@ -39,12 +40,13 @@ func ShowTemplateController(c *gin.Context, app *application.App, templateID str
 	endpoint := fmt.Sprintf("%s://%s", scheme, c.Request.Host)
 
 	c.HTML(http.StatusOK, "template", gin.H{
-		"title":    "Template",
-		"nav":      "templates",
-		"template": template,
-		"success":  c.Query("success"),
-		"error":    c.Query("error"),
-		"endpoint": endpoint,
+		"title":      "Template",
+		"nav":        "templates",
+		"template":   template,
+		"success":    c.Query("success"),
+		"error":      c.Query("error"),
+		"endpoint":   endpoint,
+		"currentUrl": c.Request.URL.Path,
 	})
 }
 
@@ -98,11 +100,12 @@ func ShowCreateTemplateController(c *gin.Context, app *application.App) {
 	}
 
 	c.HTML(http.StatusOK, "templates-create", gin.H{
-		"title":   "Create template",
-		"nav":     "templates",
-		"servers": servers,
-		"server":  selectedServer,
-		"jobs":    nomadJobs,
+		"title":      "Create template",
+		"nav":        "templates",
+		"servers":    servers,
+		"server":     selectedServer,
+		"jobs":       nomadJobs,
+		"currentUrl": c.Request.URL.Path,
 	})
 }
 
