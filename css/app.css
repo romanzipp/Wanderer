@@ -53,6 +53,14 @@
         @apply bg-red-500
     }
 
+    .button.button-danger-light {
+        @apply bg-red-200 text-red-900 shadow-red-500
+    }
+
+    .button.button-danger-light:hover {
+        @apply bg-red-300
+    }
+
     .card {
         @apply p-6 bg-white shadow rounded-md
     }
@@ -164,6 +172,10 @@
         }
 
         .button.button-danger {
+            @apply shadow-red-500/40
+        }
+
+        .button.button-danger-light {
             @apply shadow-red-500/40
         }
 

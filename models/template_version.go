@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/dustin/go-humanize"
 	"gorm.io/gorm"
 	"time"
 )
@@ -12,4 +13,8 @@ type TemplateVersion struct {
 	TemplateID     int
 	LastDeployedAt time.Time
 	LastVersion    string
+}
+
+func (t TemplateVersion) GetPrettyDate() string {
+	return humanize.Time(t.LastDeployedAt)
 }

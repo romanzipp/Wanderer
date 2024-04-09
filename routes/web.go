@@ -59,6 +59,10 @@ func InitWebRoutes(app *application.App) {
 		web.UpdateTemplateController(c, app, c.Param("templateID"))
 	})
 
+	authed.POST("/templates/:templateID/lock", func(c *gin.Context) {
+		web.LockTemplateController(c, app, c.Param("templateID"))
+	})
+
 	authed.POST("/templates/:templateID/delete", func(c *gin.Context) {
 		web.DeleteTemplateController(c, app, c.Param("templateID"))
 	})

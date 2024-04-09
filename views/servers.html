@@ -27,24 +27,24 @@
 
     <div class="h-px w-full bg-gray-200 dark:bg-gray-700"></div>
 
-    <div class="flex justify-between space-x-6 p-6 text-sm leading-normal">
-        <div>
+    <div class="grid grid-flow-col justify-stretch gap-6 p-6 text-sm leading-normal">
+        <div class="p-4 rounded-md bg-gray-900/50">
             <div class="text-gray-500 dark:text-gray-400">ID</div>
             <div>{{.ID}}</div>
         </div>
-        <div>
+        <div class="p-4 rounded-md bg-gray-900/50">
             <div class="text-gray-500 dark:text-gray-400">Status</div>
             <div>{{.Status.GetTitle}} ({{.LastStatusCheck.Format "15:04"}})</div>
         </div>
-        <div>
+        <div class="p-4 rounded-md bg-gray-900/50">
             <div class="text-gray-500 dark:text-gray-400">Created</div>
             <div>{{.CreatedAt.Format "2006-01-02"}}</div>
         </div>
-        <div>
+        <div class="p-4 rounded-md bg-gray-900/50">
             <div class="text-gray-500 dark:text-gray-400">Updated</div>
             <div>{{.UpdatedAt.Format "2006-01-02"}}</div>
         </div>
-        <div>
+        <div class="p-4 rounded-md bg-gray-900/50">
             <div class="text-gray-500 dark:text-gray-400">Cloudflare</div>
             <div>{{if .CfAccessClientId}}yes{{else}}no{{end}}</div>
         </div>

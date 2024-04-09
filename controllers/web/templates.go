@@ -61,6 +61,27 @@ func UpdateTemplateController(c *gin.Context, app *application.App, templateID s
 	c.Redirect(302, fmt.Sprintf("/templates/%s?success=Template+updated", templateID))
 }
 
+func LockTemplateController(c *gin.Context, app *application.App, templateID string) {
+	var template models.Template
+	app.DB.Where("id = ?", templateID).First(&template)
+
+	if template.ID == 0 {
+		c.Redirect(302, "/templates?error=Template+not+found")
+		return
+	}
+
+	template.Locked = !template.Locked
+
+	app.DB.Save(template)
+
+	msg := "Template+unlocked"
+	if template.Locked {
+		msg = "Template+locked"
+	}
+
+	c.Redirect(302, fmt.Sprintf("/templates/%s?success=%s", templateID, msg))
+}
+
 func DeleteTemplateController(c *gin.Context, app *application.App, templateID string) {
 	var template models.Template
 	app.DB.Where("id = ?", templateID).First(&template)
