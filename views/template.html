@@ -16,7 +16,9 @@
                     <th>Selector</th>
                     <th>Latest Version</th>
                     <th>Last deploy at</th>
+                    {{if not .template.Locked}}
                     <th>Del</th>
+                    {{end}}
                 </tr>
                 </thead>
                 <tbody>
@@ -25,7 +27,7 @@
                     <td>{{.Selector}}</td>
                     <td>
                         {{if .LastVersion}}
-                        {{.LastVersion}}
+                        <code>{{.LastVersion}}</code>
                         {{else}}
                         <span class="text-gray-300">none</span>
                         {{end}}
@@ -37,6 +39,7 @@
                         <span class="text-gray-300">none</span>
                         {{end}}
                     </td>
+                    {{if not $.template.Locked}}
                     <td>
                         <form method="post" action="/versions/{{.ID}}">
                             <input type="hidden" name="template" value="">
@@ -45,6 +48,7 @@
                             </button>
                         </form>
                     </td>
+                    {{end}}
                 </tr>
                 {{end}}
                 </tbody>
@@ -59,6 +63,8 @@
             </div>
         </div>
         {{end}}
+
+        {{if not .template.Locked}}
 
         <div class="card">
             <h1 class="mb-6 text-2xl">
@@ -98,6 +104,8 @@
             </form>
         </div>
 
+        {{end}}
+
     </div>
 
     <div class="w-2/5 space-y-6">
@@ -118,6 +126,7 @@
                            type="text"
                            placeholder="Web Job"
                            value="{{.template.Name}}"
+                           {{if .template.Locked}} readonly {{end}}
                            required>
                 </div>
 
@@ -128,6 +137,7 @@
                            type="text"
                            placeholder="web-job"
                            value="{{.template.NomadJobID}}"
+                           {{if .template.Locked}} readonly {{end}}
                            required>
                 </div>
 
@@ -171,12 +181,25 @@ jobs:
 
         <details>
             <summary>Danger Zone</summary>
-            <div class="mt-4">
+            <div class="mt-4 flex gap-4">
+                {{if .template.Locked}}
+                <form action="/templates/{{.template.ID}}/lock" method="post">
+                    <button type="submit" class="button button-danger-light">
+                        Unlock template
+                    </button>
+                </form>
+                {{else}}
+                <form action="/templates/{{.template.ID}}/lock" method="post">
+                    <button type="submit" class="button button-danger-light">
+                        Lock template
+                    </button>
+                </form>
                 <form action="/templates/{{.template.ID}}/delete" method="post">
                     <button type="submit" class="button button-danger">
                         Delete template
                     </button>
                 </form>
+                {{end}}
             </div>
         </details>
 

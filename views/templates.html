@@ -35,9 +35,14 @@
 
             <div class="flex justify-start space-x-6 p-6 text-sm leading-normal">
                 {{range .Versions}}
-                <div>
-                    <div class="text-gray-500 dark:text-gray-400">{{.Selector}}</div>
-                    <div>{{.LastVersion}}</div>
+                <div class="p-4 rounded-md bg-gray-900/50">
+                    <div class="mb-2 text-gray-500 dark:text-gray-400">
+                        {{.Selector}}
+                    </div>
+                    <code>{{.LastVersion}}</code>
+                    {{if not .LastDeployedAt.IsZero}}
+                    <span class="text-xs text-gray-500 dark:text-gray-400">({{.GetPrettyDate}})</span>
+                    {{end}}
                 </div>
                 {{end}}
             </div>

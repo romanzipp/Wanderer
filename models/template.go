@@ -18,6 +18,7 @@ type Template struct {
 	Server     Server
 	ServerID   uint
 	Versions   []TemplateVersion
+	Locked     bool
 }
 
 func (t Template) GetNomadJobUrl() string {
