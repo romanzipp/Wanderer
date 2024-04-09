@@ -15,8 +15,8 @@ FROM node AS build-frontend
 WORKDIR /
 
 COPY . ./
-RUN yarn
-RUN yarn build
+RUN npm install
+RUN npm run build
 
 ## Deploy
 FROM gcr.io/distroless/base-debian10

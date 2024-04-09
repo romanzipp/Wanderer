@@ -75,13 +75,13 @@ gow -e=go,html run .
 #### Install dependencies
 
 ```
-yarn install
+npm install
 ```
 
 #### Build & hot reload
 
 ```shell
-yarn watch
+npm run watch
 ```
 
 ## License
