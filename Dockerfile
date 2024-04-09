@@ -3,16 +3,16 @@
 ## Build go application
 FROM golang:1.19-buster AS build
 
-WORKDIR /
+WORKDIR /app
 
 COPY . ./
 RUN go mod download
-RUN go build -o /wanderer
+RUN go build -o wanderer
 
 ## Build frontend
 FROM node:20 AS build-frontend
 
-WORKDIR /
+WORKDIR /app
 
 COPY . ./
 RUN npm install
@@ -21,15 +21,15 @@ RUN npm run build
 ## Deploy
 FROM gcr.io/distroless/base-debian10
 
-WORKDIR /
+WORKDIR /app
 
-COPY --from=build /wanderer /wanderer
-COPY --from=build /views /views
-COPY --from=build-frontend /dist/app.css /dist/app.css
-COPY --from=build-frontend /static /static
+COPY --from=build /app/wanderer /app/wanderer
+COPY --from=build /app/views /app/views
+COPY --from=build-frontend /app/dist/app.css /app/dist/app.css
+COPY --from=build-frontend /app/static /app/static
 
 EXPOSE 8080
 
 USER nonroot:nonroot
 
-CMD ["/wanderer"]
+CMD ["./wanderer"]
