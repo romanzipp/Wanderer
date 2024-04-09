@@ -13,7 +13,7 @@
 
     <div class="flex justify-between p-6">
         <div>
-            <div class="text-lg text-gray-800 dark:text-white">
+            <div class="text-xl text-gray-800 dark:text-white">
                 {{.Name}}
             </div>
             <div class="text-gray-500 dark:text-gray-400 text-sm">
@@ -24,50 +24,63 @@
 
     <div class="h-px w-full bg-gray-200 dark:bg-gray-700"></div>
 
-    {{if ne .Server.ID 0}}
+    <div class="grid grid-flow-col justify-stretch">
 
-    <div class="flex justify-between space-x-6 p-6 text-sm leading-normal">
+        {{if .Versions}}
+
         <div>
-            <div class="text-gray-500 dark:text-gray-400">Cluster</div>
-            <a href="/servers/{{.ServerID}}" class="link">{{.Server.Name}}</a> (ID: {{.ServerID}})
-        </div>
-        <div>
-            <div class="text-gray-500 dark:text-gray-400">Nomad Job</div>
-            <a href="{{.GetNomadJobUrl}}" target="_blank" class="link">{{.NomadJobID}}</a>
-        </div>
-        <div>
-            <div class="text-gray-500 dark:text-gray-400">Created</div>
-            <div>{{.CreatedAt.Format "2006-01-02"}}</div>
-        </div>
-        <div>
-            <div class="text-gray-500 dark:text-gray-400">Updated</div>
-            <div>{{.UpdatedAt.Format "2006-01-02"}}</div>
-        </div>
-    </div>
+            <div class="p-6 pb-0 uppercase text-gray-500 dark:text-gray-400 font-medium">
+                Versions
+            </div>
 
-    {{else}}
-    <div class="alert alert-error m-4">
-        The associated server ({{.ServerID}}) is not available
-    </div>
-    {{end}}
-
-    {{if .Versions}}
-
-    <div class="h-px w-full bg-gray-200 dark:bg-gray-700"></div>
-
-    <div class="p-6 pb-0 uppercase text-gray-500 dark:text-gray-400 font-medium">
-        Versions
-    </div>
-
-    <div class="flex justify-start space-x-6 p-6 text-sm leading-normal">
-        {{range .Versions}}
-        <div>
-            <div class="text-gray-500 dark:text-gray-400">{{.Selector}}</div>
-            <div>{{.LastVersion}}</div>
+            <div class="flex justify-start space-x-6 p-6 text-sm leading-normal">
+                {{range .Versions}}
+                <div>
+                    <div class="text-gray-500 dark:text-gray-400">{{.Selector}}</div>
+                    <div>{{.LastVersion}}</div>
+                </div>
+                {{end}}
+            </div>
         </div>
+
         {{end}}
+
+        <div>
+            <div class="p-6 pb-0 uppercase text-gray-500 dark:text-gray-400 font-medium">
+                Server
+            </div>
+
+
+            {{if ne .Server.ID 0}}
+
+            <div class="flex justify-between space-x-6 p-6 text-sm leading-normal">
+                <div>
+                    <div class="text-gray-500 dark:text-gray-400">Cluster</div>
+                    <a href="/servers/{{.ServerID}}" class="link">{{.Server.Name}}</a> (ID: {{.ServerID}})
+                </div>
+                <div>
+                    <div class="text-gray-500 dark:text-gray-400">Nomad Job</div>
+                    <a href="{{.GetNomadJobUrl}}" target="_blank" class="link">{{.NomadJobID}}</a>
+                </div>
+                <div>
+                    <div class="text-gray-500 dark:text-gray-400">Created</div>
+                    <div>{{.CreatedAt.Format "2006-01-02"}}</div>
+                </div>
+                <div>
+                    <div class="text-gray-500 dark:text-gray-400">Updated</div>
+                    <div>{{.UpdatedAt.Format "2006-01-02"}}</div>
+                </div>
+            </div>
+
+            {{else}}
+            <div class="alert alert-error m-4">
+                The associated server ({{.ServerID}}) is not available
+            </div>
+            {{end}}
+
+        </div>
+
     </div>
-    {{end}}
 
     <a href="/templates/{{.ID}}" class="block bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors duration-150 px-6 py-3 text-center font-medium text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
         Show template
