@@ -12,7 +12,7 @@ import (
 
 func ListTemplatesController(c *gin.Context, app *application.App) {
 	var templates []models.Template
-	app.DB.Model(&models.Template{}).Preload("Server").Preload("Versions").Find(&templates)
+	app.DB.Model(&models.Template{}).Preload("Server").Preload("Versions").Order("Name").Find(&templates)
 
 	c.HTML(http.StatusOK, "templates", gin.H{
 		"title":      "Templates",
