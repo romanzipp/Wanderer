@@ -169,13 +169,17 @@ jobs:
 </textarea>
         </div>
 
-        <div class="flex justify-end">
-            <form action="/templates/{{.template.ID}}/delete" method="post">
-                <button type="submit" class="button button-danger">
-                    Delete template
-                </button>
-            </form>
-        </div>
+        <details>
+            <summary>Danger Zone</summary>
+            <div class="mt-4">
+                <form action="/templates/{{.template.ID}}/delete" method="post">
+                    <button type="submit" class="button button-danger">
+                        Delete template
+                    </button>
+                </form>
+            </div>
+        </details>
+
     </div>
 
 </div>
