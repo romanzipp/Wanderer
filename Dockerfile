@@ -10,7 +10,7 @@ RUN go mod download
 RUN go build -o /wanderer
 
 ## Build frontend
-FROM node AS build-frontend
+FROM node:20 AS build-frontend
 
 WORKDIR /
 
