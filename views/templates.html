@@ -29,10 +29,6 @@
         {{if .Versions}}
 
         <div>
-            <div class="p-6 pb-0 uppercase text-gray-500 dark:text-gray-400 font-medium">
-                Versions
-            </div>
-
             <div class="flex justify-start space-x-6 p-6 text-sm leading-normal">
                 {{range .Versions}}
                 <div class="p-4 rounded-md bg-gray-100 dark:bg-gray-900/50">
@@ -51,9 +47,6 @@
         {{end}}
 
         <div>
-            <div class="p-6 pb-0 uppercase text-gray-500 dark:text-gray-400 font-medium">
-                Server
-            </div>
 
             {{if ne .Server.ID 0}}
 
