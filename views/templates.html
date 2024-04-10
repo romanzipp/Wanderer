@@ -35,7 +35,7 @@
 
             <div class="flex justify-start space-x-6 p-6 text-sm leading-normal">
                 {{range .Versions}}
-                <div class="p-4 rounded-md bg-gray-900/50">
+                <div class="p-4 rounded-md bg-gray-100 dark:bg-gray-900/50">
                     <div class="mb-2 text-gray-500 dark:text-gray-400">
                         {{.Selector}}
                     </div>
@@ -58,19 +58,19 @@
             {{if ne .Server.ID 0}}
 
             <div class="grid grid-flow-col justify-stretch gap-6 p-6 text-sm leading-normal">
-                <div class="p-4 rounded-md bg-gray-900/50">
+                <div class="p-4 rounded-md bg-gray-100 dark:bg-gray-900/50">
                     <div class="mb-2 text-gray-500 dark:text-gray-400">Cluster</div>
                     <a href="/servers/{{.ServerID}}" class="link">{{.Server.Name}}</a> (ID: {{.ServerID}})
                 </div>
-                <div class="p-4 rounded-md bg-gray-900/50">
+                <div class="p-4 rounded-md bg-gray-100 dark:bg-gray-900/50">
                     <div class="mb-2 text-gray-500 dark:text-gray-400">Nomad Job</div>
                     <a href="{{.GetNomadJobUrl}}" target="_blank" class="link">{{.NomadJobID}}</a>
                 </div>
-                <div class="p-4 rounded-md bg-gray-900/50">
+                <div class="p-4 rounded-md bg-gray-100 dark:bg-gray-900/50">
                     <div class="mb-2 text-gray-500 dark:text-gray-400">Created</div>
                     <div>{{.CreatedAt.Format "2006-01-02"}}</div>
                 </div>
-                <div class="p-4 rounded-md bg-gray-900/50">
+                <div class="p-4 rounded-md bg-gray-100 dark:bg-gray-900/50">
                     <div class="mb-2 text-gray-500 dark:text-gray-400">Updated</div>
                     <div>{{.UpdatedAt.Format "2006-01-02"}}</div>
                 </div>

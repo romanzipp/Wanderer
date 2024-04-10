@@ -54,7 +54,7 @@
     }
 
     .button.button-danger-light {
-        @apply bg-red-200 text-red-900 shadow-red-500
+        @apply bg-red-200 text-red-900 shadow-red-200
     }
 
     .button.button-danger-light:hover {
