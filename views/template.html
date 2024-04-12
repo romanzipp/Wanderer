@@ -118,6 +118,7 @@
             <form action="/templates/{{.template.ID}}" method="post" enctype="multipart/form-data" class="space-y-4">
 
                 <input type="hidden" name="server" value="{{.template.ServerID}}">
+                <input type="hidden" name="locked" value="{{if .template.Locked}}on{{end}}">
 
                 <div>
                     <label for="name" class="required">Name</label>

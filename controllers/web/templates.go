@@ -161,6 +161,7 @@ func fillTemplate(c *gin.Context, serverID uint) models.Template {
 		Name:       c.PostForm("name"),
 		NomadJobID: c.PostForm("job"),
 		Content:    c.PostForm("content"),
+		Locked:     c.PostForm("locked") == "on",
 		ServerID:   serverID,
 	}
 }
