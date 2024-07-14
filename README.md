@@ -79,7 +79,7 @@ job "my-service" {
 }
 ```
 
-## Docker
+## Deploy Wanderer via Docker
 
 ```
 docker pull ghcr.io/romanzipp/wanderer:latest
@@ -103,6 +103,64 @@ docker run \
   -v "$(pwd)/.env:/app/.env" \
   -p 8080:8080 \
   wanderer:latest
+```
+
+### On Nomad via Docker
+
+You can also just deploy Wanderer via Nomad itself.
+
+```hcl
+job "wanderer" {
+  type = "service"
+  
+  group "wanderer" {
+    network {
+      mode = "bridge"
+
+      port "http" {
+        to = 8080
+      }
+    }
+
+    service {
+      name = "wanderer"
+      port = "http"
+    }
+
+    task "wanderer" {
+      driver = "docker"
+
+      config {
+        image   = "ghcr.io/romanzipp/wanderer:1.3.0"
+        ports   = ["http"]
+        volumes = [
+          "local/.env:/app/.env"
+        ]
+
+        mount {
+          type     = "bind"
+          target   = "/app/data/"
+          source   = "/opt/wanderer/data/"
+          readonly = false
+          bind_options {
+            propagation = "rshared"
+          }
+        }
+      }
+
+      template {
+        destination = "local/.env"
+        change_mode = "restart"
+        data        = <<-EOH
+        APP_PASSWORD=supersecret
+        SESSION_LIFETIME=43200
+        EOH
+      }
+
+    }
+  }
+}
+
 ```
 
 ## API
