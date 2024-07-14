@@ -109,13 +109,13 @@ func ShowCreateTemplateController(c *gin.Context, app *application.App) {
 	if selectedServer.ID != 0 {
 		client, err := selectedServer.NewNomadClient()
 		if err != nil {
-			c.Redirect(302, "/templates/create?error=nomad-client")
+			c.Redirect(302, fmt.Sprintf("/templates/create?error=Unable+to+connect+to+Nomad+(%s)", err))
 			return
 		}
 
 		nomadJobs, _, err = client.Jobs().List(&api.QueryOptions{})
 		if err != nil {
-			c.Redirect(302, "/templates/create?error=nomad-jobs")
+			c.Redirect(302, fmt.Sprintf("/templates/create?error=Unable+to+list+Nomad+jobs+(%s)", err))
 			return
 		}
 	}
