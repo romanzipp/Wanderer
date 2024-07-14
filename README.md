@@ -131,7 +131,7 @@ job "wanderer" {
       driver = "docker"
 
       config {
-        image   = "ghcr.io/romanzipp/wanderer:1.3.0"
+        image   = "ghcr.io/romanzipp/wanderer:latest"
         ports   = ["http"]
         volumes = [
           "local/.env:/app/.env"
