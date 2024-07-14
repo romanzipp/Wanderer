@@ -2,19 +2,23 @@
   <img src="wordmark.png" />
 </p>
 
+Wanderer is a **deployment manager** for [HashiCorp **Nomad**](https://www.nomadproject.io/) for **automated deployments** of new job versions via **CI/CD pipelines**.
+
 ## Features
 
-- Provides a centralized repository for Nomad HCL templates
-- Offers API for CD tools to automate deployment of new versions
-- Simple Web UI for editing templates & monitoring deployments
-- Supports Nomad instances behind Cloudflare Access Zero Trust network
+- Provides a **centralized repository** for Nomad HCL templates
+- Offers **API** for CD tools to automate deployment of new versions
+- Simple **Web UI** for editing templates & monitoring deployments
+- Supports Nomad instances behind **Cloudflare Access Zero Trust** network
 - [**GitHub Actions Workflow**](https://github.com/romanzipp/Wanderer-Action) available for easy pipeline integration
 
 See [**Development Project**](https://github.com/users/romanzipp/projects/2/views/1) for more details.
 
-![](diagram.png)
+![](art/diagram.png)
 
-Built with [Go](https://go.dev/), [Tailwind CSS](https://tailwindcss.com/) and [SQLite](https://sqlite.org/).
+Built with [Go](https://go.dev/), [Tailwind CSS](https://tailwindcss.com/) and [SQLite](https://sqlite.org/). Contains 0 lines of JavaScript 👀
+
+![](art/ui.png)
 
 ## Docker
 
