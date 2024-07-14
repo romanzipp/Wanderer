@@ -12,27 +12,39 @@
 
     {{if ne .server.ID 0}}
 
+    <div class="alert alert-info mb-4">
+        Add the job details
+    </div>
+
     <form action="/templates" method="post" enctype="multipart/form-data" class="space-y-4">
 
         <input type="hidden" name="server" value="{{.server.ID}}">
 
         <div>
             <label for="job" class="required">Nomad Job</label>
-            <select id="job"
-                    name="job"
-                    required>
+            <input type="text"
+                   id="job"
+                   name="job"
+                   placeholder="web-job"
+                   value="{{.job}}"
+                   required />
+            <div class="flex flex-wrap gap-1 mt-2">
                 {{range .jobs}}
-                <option value="{{.ID}}">{{.Name}}</option>
+                    <a href="/templates/create?server={{$.server.ID}}&job={{.ID}}"
+                       class="text-xs px-1  leading-normal rounded {{if eq $.job .ID}} bg-pink-100 text-pink-600 {{else}} bg-gray-100 text-gray-600 hover:bg-pink-100 hover:text-pink-600 {{end}}">
+                        {{.Name}}
+                    </a>
                 {{end}}
-            </select>
+            </div>
         </div>
 
         <div>
-            <label for="name" class="required">Name</label>
+            <label for="name" class="required">Display Name</label>
             <input id="name"
                    name="name"
                    type="text"
                    placeholder="Web Job"
+                   value="{{.job}}"
                    required>
         </div>
 

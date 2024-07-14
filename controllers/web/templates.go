@@ -126,6 +126,8 @@ func ShowCreateTemplateController(c *gin.Context, app *application.App) {
 		"servers":    servers,
 		"server":     selectedServer,
 		"jobs":       nomadJobs,
+		"job":        c.Query("job"),
+		"error":      c.Query("error"),
 		"currentUrl": c.Request.URL.Path,
 	})
 }
