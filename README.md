@@ -4,6 +4,9 @@
 
 Wanderer is a **deployment manager** for [HashiCorp **Nomad**](https://www.nomadproject.io/) for **automated deployments** of new job versions via **CI/CD pipelines**.
 
+> [!NOTE]
+> This project is primarily developed on [Codeberg](https://codeberg.org/romanzipp/wanderer) and only mirrored to GitHub. Please open issues and pull requests on Codeberg.
+
 ## Features
 
 - Provides a **centralized repository** for Nomad HCL templates
