@@ -1,6 +1,10 @@
 package main
 
 import (
+	"os"
+	"strconv"
+	"time"
+
 	"github.com/foolin/goview/supports/ginview"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/logger"
@@ -13,9 +17,6 @@ import (
 	"github.com/rs/zerolog/log"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"os"
-	"strconv"
-	"time"
 )
 
 func main() {
@@ -37,11 +38,11 @@ func main() {
 	)
 
 	app := &application.App{}
-	app.DB = MakeDb()
+	app.DB = MakeDB()
 	app.Router = MakeRouter(app.DB)
 	app.Env = makeEnv()
 
-	routes.InitApiRoutes(app)
+	routes.InitAPIRoutes(app)
 	routes.InitWebRoutes(app)
 
 	go MakeCheckScheduler(app)
@@ -58,7 +59,7 @@ func makeEnv() application.Env {
 	}
 }
 
-func MakeDb() *gorm.DB {
+func MakeDB() *gorm.DB {
 	db, err := gorm.Open(sqlite.Open("data/data.db"), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")

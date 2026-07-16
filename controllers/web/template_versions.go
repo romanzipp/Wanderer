@@ -2,11 +2,12 @@ package web
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
+
 	"github.com/gin-gonic/gin"
 	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/models"
-	"strconv"
-	"strings"
 )
 
 func CreateVersionController(c *gin.Context, app *application.App, templateID string) {
@@ -28,5 +29,5 @@ func DeleteVersionController(c *gin.Context, app *application.App, versionID str
 
 	app.DB.Delete(version)
 
-	c.Redirect(302, fmt.Sprintf("/templates?success=Version+deleted"))
+	c.Redirect(302, "/templates?success=Version+deleted")
 }

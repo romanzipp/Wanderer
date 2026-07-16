@@ -3,6 +3,7 @@ package routes
 import (
 	"crypto/sha256"
 	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/controllers/web"
@@ -90,15 +91,15 @@ func InitWebRoutes(app *application.App) {
 	// api
 
 	authed.GET("/tokens", func(c *gin.Context) {
-		web.ApiController(c, app)
+		web.APIController(c, app)
 	})
 
 	authed.POST("/tokens", func(c *gin.Context) {
-		web.IssueApiTokenController(c, app)
+		web.IssueAPITokenController(c, app)
 	})
 
 	authed.POST("/tokens/:tokenID/delete", func(c *gin.Context) {
-		web.DeleteApiTokenController(c, app, c.Param("tokenID"))
+		web.DeleteAPITokenController(c, app, c.Param("tokenID"))
 	})
 
 	// --------------------------------------------

@@ -2,21 +2,22 @@ package routes
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/controllers/api"
 	"github.com/romanzipp/wanderer/models"
 	"gorm.io/gorm"
-	"time"
 )
 
-type JsonError struct {
+type JSONError struct {
 	Message string `json:"message"`
 }
 
-func InitApiRoutes(app *application.App) {
+func InitAPIRoutes(app *application.App) {
 	authed := app.Router.Group("/api")
-	authed.Use(ApiTokenAuth(app.DB))
+	authed.Use(APITokenAuth(app.DB))
 
 	authed.GET("/", func(c *gin.Context) {
 		api.IndexController(c, app)
@@ -27,12 +28,12 @@ func InitApiRoutes(app *application.App) {
 	})
 }
 
-func ApiTokenAuth(db *gorm.DB) gin.HandlerFunc {
+func APITokenAuth(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenStr := c.Request.Header.Get("Authorization")
 
 		if len(tokenStr) == 0 {
-			c.AbortWithStatusJSON(401, JsonError{"Missing token"})
+			c.AbortWithStatusJSON(401, JSONError{"Missing token"})
 			return
 		}
 
@@ -40,7 +41,7 @@ func ApiTokenAuth(db *gorm.DB) gin.HandlerFunc {
 		db.Where("token = ?", tokenStr).Find(&token)
 
 		if token.ID == 0 {
-			c.AbortWithStatusJSON(401, JsonError{fmt.Sprintf("Invalid token: %s", tokenStr)})
+			c.AbortWithStatusJSON(401, JSONError{fmt.Sprintf("Invalid token: %s", tokenStr)})
 			return
 		}
 

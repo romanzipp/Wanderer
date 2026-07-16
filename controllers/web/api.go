@@ -2,14 +2,15 @@ package web
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/romanzipp/wanderer/application"
 	"github.com/romanzipp/wanderer/models"
-	"net/http"
 )
 
-func ApiController(c *gin.Context, app *application.App) {
+func APIController(c *gin.Context, app *application.App) {
 	var tokens []models.Token
 	app.DB.Find(&tokens)
 
@@ -24,7 +25,7 @@ func ApiController(c *gin.Context, app *application.App) {
 	})
 }
 
-func IssueApiTokenController(c *gin.Context, app *application.App) {
+func IssueAPITokenController(c *gin.Context, app *application.App) {
 	token := uuid.NewString()
 	app.DB.Create(&models.Token{
 		Name:  c.PostForm("name"),
@@ -34,7 +35,7 @@ func IssueApiTokenController(c *gin.Context, app *application.App) {
 	c.Redirect(302, fmt.Sprintf("/tokens?token=%s&success=Token+issued", token))
 }
 
-func DeleteApiTokenController(c *gin.Context, app *application.App, tokenID string) {
+func DeleteAPITokenController(c *gin.Context, app *application.App, tokenID string) {
 	var token models.Token
 	app.DB.Where("id = ?", tokenID).First(&token)
 

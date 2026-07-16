@@ -3,11 +3,12 @@ package models
 import (
 	"errors"
 	"fmt"
+	"strings"
+	"time"
+
 	"github.com/hashicorp/nomad/api"
 	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
-	"strings"
-	"time"
 )
 
 type Template struct {
@@ -21,7 +22,7 @@ type Template struct {
 	Locked     bool
 }
 
-func (t Template) GetNomadJobUrl() string {
+func (t Template) GetNomadJobURL() string {
 	return fmt.Sprintf("%s/ui/jobs//%s", t.Server.Address, t.NomadJobID)
 }
 
@@ -52,7 +53,7 @@ func (t Template) Deploy(db *gorm.DB, templateVersion *TemplateVersion, versionS
 	// get new template content with new versions
 	payload := t.getPopulatedContentForVersion(db, *templateVersion)
 
-	err := t.deployPayload(db, payload)
+	err := t.deployPayload(payload)
 	if err != nil {
 		return err
 	}
@@ -91,7 +92,7 @@ func (t Template) DeployCurrent(db *gorm.DB) error {
 	// get new template content with new versions
 	payload := t.getPopulatedContent(db)
 
-	err := t.deployPayload(db, payload)
+	err := t.deployPayload(payload)
 	if err != nil {
 		return err
 	}
@@ -102,7 +103,7 @@ func (t Template) DeployCurrent(db *gorm.DB) error {
 // --------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------------------------------
 
-func (t Template) deployPayload(db *gorm.DB, payload string) error {
+func (t Template) deployPayload(payload string) error {
 	if t.Server.ID == 0 {
 		return errors.New("missing server")
 	}
